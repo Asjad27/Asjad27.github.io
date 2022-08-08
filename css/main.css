@@ -1448,7 +1448,7 @@ textarea.form-control, textarea.form-control:focus {
     display: table-cell;
     width: 120px;
     height: 100%;
-    background-color: #444;
+    background-color: white;
     padding: 25px;
     vertical-align: middle;
     border-top-left-radius: 6px;
