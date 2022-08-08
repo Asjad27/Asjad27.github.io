@@ -1,0 +1,95 @@
+<div id="ajax-page" class="ajax-page-content">
+    <div class="ajax-page-wrapper">
+        <div class="ajax-page-nav">
+            <div class="nav-item ajax-page-prev-next">
+                <a class="ajax-page-load" href="../html_pages/portfolio_ckids.html"><i class="lnr lnr-chevron-left"></i></a>
+                <a class="ajax-page-load" href="../html_pages/portfolio_cellular.html"><i class="lnr lnr-chevron-right"></i></a>
+            </div>
+            <div class="nav-item ajax-page-close-button">
+                <a id="ajax-page-close-button" href="#"><i class="lnr lnr-cross"></i></a>
+            </div>
+        </div>
+
+        <div class="ajax-page-title">
+            <h1>Satellite Tracker</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-md-8 portfolio-block">
+                <div class="owl-carousel portfolio-page-carousel">
+                    <div class="item">
+                        <img src="../img/portfolio/satellite_tracker.png" alt="satellite_tracker"/>
+                    </div>
+                </div>
+
+                <div class="portfolio-page-video embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/5trjJ1A569s"></iframe>
+                </div>
+
+                <script type="text/javascript">
+                    jQuery(document).ready(function ($) {
+                        $('.portfolio-page-carousel').imagesLoaded(function () {
+                            $('.portfolio-page-carousel').owlCarousel({
+                                smartSpeed: 1200,
+                                items: 1,
+                                loop: true,
+                                dots: true,
+                                nav: true,
+                                navText: false,
+                                margin: 10,
+                                autoHeight: true
+                            });
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-sm-4 col-md-4 portfolio-block">
+                <!-- Project Description -->
+                <div class="project-description">
+                    <div class="block-title">
+                        <h3>Description</h3>
+                    </div>
+                    <ul class="project-general-info">
+                        <li><p><i class="fa fa-user"></i> Asjad Asif Jah</p></li>
+                        <li><p><i class="fa fa-globe"></i> <a
+                                href="https://www.youtube.com/watch?v=5trjJ1A569s"
+                                target="_blank">https://www.youtube.com/watch?v=5trjJ1A569s</a>
+                        </p></li>
+                        <li><p><i class="fa fa-calendar"></i> November 2020</p></li>
+                    </ul>
+
+                    <p class="text-justify">Satellite Tracker is an application that allows the user to visualize
+                        (plotted on a map) the real-time locations and historical as well as predicted orbital paths of
+                        satellites orbiting around the earth. It consists of a frontend for the visualization, a backend
+                        for processing the raw data and calculating the satellites' positions in real-time, and a
+                        database for the storage of the raw and the processed data. Users are able to search for a
+                        particular satellite using any attribute like Name, NORAD (North American Aerospace Defense) ID,
+                        Country/Owner, Launch Date, etc. Additionally, the user is also able to select a location on the
+                        map enabling him/her to view all the satellites that are currently visible from that location
+                        (potentially having a line of sight being above the horizon). The motivation behind this project
+                        was to build a solution that allows the user to easily explore and visualize hundreds of
+                        satellites in orbit above us, which we daily use in one way or another, be it for navigation or
+                        watching our favorite television show.</p>
+                    <!-- /Project Description -->
+
+                    <!-- Tags -->
+                    <div class="tags-block">
+                        <div class="block-title">
+                            <h3>Tags</h3>
+                        </div>
+                        <ul class="tags">
+                            <li><a>SpaceTrack</a></li>
+                            <li><a>Celestrak</a></li>
+                            <li><a>Apache Spark</a></li>
+                            <li><a>MySQL</a></li>
+                            <li><a>Django</a></li>
+                            <li><a>Angular</a></li>
+                        </ul>
+                    </div>
+                    <!-- /Tags -->
+                </div>
+                <!-- Project Description -->
+            </div>
+        </div>
+    </div>
+</div>
