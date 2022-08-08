@@ -260,10 +260,6 @@
                         index: 'vimeo.com/',
                         id: '/',
                         src: '//player.vimeo.com/video/%id%?autoplay=1'
-                    },
-                    gmaps: {
-                        index: '//maps.google.',
-                        src: '%id%&output=embed'
                     }
                 },
 
@@ -277,13 +273,6 @@
             },
         });
 
-        //Google Maps
-        $("#map").googleMap({
-            zoom: 10
-        }).addMarker({
-            coords: [33.55021800172538, 73.12401023084115],
-            title: "Me!"
-        });
     });
 
 })(jQuery);
