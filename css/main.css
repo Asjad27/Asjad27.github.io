@@ -889,6 +889,10 @@ textarea.form-control, textarea.form-control:focus {
     color: #f58545;
 }
 
+.skill-title h4 span {
+    color: #f58545;
+}
+
 .block-title:after {
     position: absolute;
     opacity: 0.45;
