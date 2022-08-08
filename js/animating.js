@@ -6,17 +6,17 @@
 */
 
 var PageTransitions = (function ($, options) {
-"use strict";
+    "use strict";
     var sectionsContainer = $(".animated-sections"),
         isAnimating = false,
         endCurrentPage = true,
         endNextPage = false,
         windowArea = $(window),
         animEndEventNames = {
-            'WebkitAnimation'   : 'webkitAnimationEnd',
-            'OAnimation'        : 'oAnimationEnd',
-            'msAnimation'       : 'MSAnimationEnd',
-            'animation'         : 'animationend'
+            'WebkitAnimation': 'webkitAnimationEnd',
+            'OAnimation': 'oAnimationEnd',
+            'msAnimation': 'MSAnimationEnd',
+            'animation': 'animationend'
         },
 
         // animation end event name
@@ -28,15 +28,15 @@ var PageTransitions = (function ($, options) {
     function init(options) {
 
         // Get all the .animated-section sections.
-        $('.animated-section').each( function() {
+        $('.animated-section').each(function () {
             var $page = $(this);
             $page.data('originalClassList', $page.attr('class'));
         });
 
         // Get all the .pt-wrapper div which is the parent for all pt-div
-        sectionsContainer.each( function() {
+        sectionsContainer.each(function () {
             if (location.hash === "") {
-                $('section[data-id='+ pageStart +']').addClass('section-active');
+                $('section[data-id=' + pageStart + ']').addClass('section-active');
             }
         });
 
@@ -48,21 +48,21 @@ var PageTransitions = (function ($, options) {
             }
             var pageTrigger = $(this);
 
-            activeMenuItem( pageTrigger );
+            activeMenuItem(pageTrigger);
 
-            Animate( pageTrigger );
+            Animate(pageTrigger);
 
             location.hash = $(this).attr('href');
 
         });
 
-        window.onhashchange = function(event) {
-            if(location.hash) {
+        window.onhashchange = function (event) {
+            if (location.hash) {
                 if (isAnimating) {
                     return false;
                 }
-                var menuLink = $(menu+' a[href*="'+location.hash.split('/')[0]+'"]');
-                activeMenuItem( menuLink );
+                var menuLink = $(menu + ' a[href*="' + location.hash.split('/')[0] + '"]');
+                activeMenuItem(menuLink);
                 Animate(menuLink);
 
                 ajaxLoader();
@@ -70,10 +70,10 @@ var PageTransitions = (function ($, options) {
         };
 
         var menu = options.menu,
-        pageStart = getActiveSection();
+            pageStart = getActiveSection();
 
         location.hash = pageStart;
-        var menuLink = $(menu+' a[href*="'+location.hash.split('/')[0]+'"]');
+        var menuLink = $(menu + ' a[href*="' + location.hash.split('/')[0] + '"]');
 
         activeMenuItem(menuLink);
 
@@ -82,42 +82,41 @@ var PageTransitions = (function ($, options) {
         $('body').append('<div id="page-ajax-loaded" class="page-ajax-loaded animated animated-section-moveFromLeft"></div>');
         ajaxLoader();
 
-        $(".lmpixels-arrow-right").click(function() {
+        $(".lmpixels-arrow-right").click(function () {
             var activeItem = $('.main-menu a.active').parent("li");
             activeItem.next("li").children("a").click();
-            if ( activeItem.is(':last-child') ) {
+            if (activeItem.is(':last-child')) {
                 $('.main-menu li:first-child').children("a").click();
             }
         });
 
-        $(".lmpixels-arrow-left").click(function() {
+        $(".lmpixels-arrow-left").click(function () {
             var activeItem = $('.main-menu a.active').parent("li");
             activeItem.prev("li").children("a").click();
-            if ( activeItem.is(':first-child') ) {
+            if (activeItem.is(':first-child')) {
                 $('.main-menu li:last-child').children("a").click();
             }
         });
     }
 
     function getActiveSection() {
-        if(location.hash === "") {
+        if (location.hash === "") {
             return location.hash = $('section.animated-section').first().attr('data-id');
-        } 
-        else {
+        } else {
             return location.hash;
         }
     }
 
     function activeMenuItem(item) {
-        if ( !item ) {
+        if (!item) {
             return false;
         }
 
         var navLink = $(item);
         navLink = navLink['0'];
         navLink = $(navLink);
-            
-        if(navLink) {
+
+        if (navLink) {
             $('ul.main-menu a').removeClass('active');
             navLink.addClass('active');
         }
@@ -136,16 +135,16 @@ var PageTransitions = (function ($, options) {
         function hideContent() {
             $('#page-ajax-loaded').addClass('animated-section-moveToRight closed');
             $('body').removeClass('ajax-page-visible');
-            setTimeout(function(){
+            setTimeout(function () {
                 $('#page-ajax-loaded.closed').html('');
                 ajaxLoadedContent.hide();
             }, 500);
         }
 
-        var href = $('.ajax-page-load').each(function(){
+        var href = $('.ajax-page-load').each(function () {
             href = $(this).attr('href');
-            if(location.hash == location.hash.split('/')[0] + '/' + href.substr(0,href.length-5)){
-                var toLoad =  $(this).attr('href');
+            if (location.hash == location.hash.split('/')[0] + '/' + href.substr(0, href.length - 5)) {
+                var toLoad = $(this).attr('href');
                 showContent();
                 ajaxLoadedContent.load(toLoad);
                 return false;
@@ -153,13 +152,13 @@ var PageTransitions = (function ($, options) {
         });
 
         $(document)
-            .on("click",".main-menu, #ajax-page-close-button", function (e) { // Hide Ajax Loaded Page on Navigation cleck and Close button
+            .on("click", ".main-menu, #ajax-page-close-button", function (e) { // Hide Ajax Loaded Page on Navigation cleck and Close button
                 e.preventDefault();
                 hideContent();
                 location.hash = location.hash.split('/')[0];
             })
-            .on("click",".ajax-page-load", function () { // Show Ajax Loaded Page
-                var hash = location.hash.split('/')[0] + '/' + $(this).attr('href').substr(0,$(this).attr('href').length-5);
+            .on("click", ".ajax-page-load", function () { // Show Ajax Loaded Page
+                var hash = location.hash.split('/')[0] + '/' + $(this).attr('href').substr(0, $(this).attr('href').length - 5);
                 location.hash = hash;
                 showContent();
 
@@ -172,18 +171,17 @@ var PageTransitions = (function ($, options) {
         // Checking for 'data-animation' attribute.
         if (!($pageTrigger.attr('data-animation'))) {
             var animNumber = parseInt(Math.floor(Math.random() * 67) + 1);
-            $pageTrigger.data('animation',animNumber);
+            $pageTrigger.data('animation', animNumber);
         }
 
         var animation = $pageTrigger.data('animation').toString(),
             gotoPage, inClass, outClass, selectedAnimNumber;
 
-         // Check if the delimiter '-' is present then create an animation array list.
-        if(animation.indexOf('-') != -1) {
+        // Check if the delimiter '-' is present then create an animation array list.
+        if (animation.indexOf('-') != -1) {
             var randomAnimList = animation.split('-');
             selectedAnimNumber = parseInt(randomAnimList[(Math.floor(Math.random() * randomAnimList.length))]);
-        }
-        else {
+        } else {
             selectedAnimNumber = parseInt(animation);
         }
 
@@ -193,7 +191,7 @@ var PageTransitions = (function ($, options) {
             return false;
         }
 
-        switch(selectedAnimNumber) {
+        switch (selectedAnimNumber) {
             case 1:
                 inClass = 'animated-section-moveFromRight';
                 outClass = 'animated-section-moveToLeft';
@@ -469,55 +467,54 @@ var PageTransitions = (function ($, options) {
             currentPageId = $pageWrapper.data('current'), tempPageIndex,
             linkhref = $pageTrigger.attr('href').split("#"),
             gotoPage = linkhref[1];
-            
-            tempPageIndex = currentPageId;
 
-            // Current page to be removed.
-            var $currentPage = $('section[data-id="' + currentPageId + '"]');
+        tempPageIndex = currentPageId;
 
-            // NEXT PAGE
-            currentPageId = gotoPage;
+        // Current page to be removed.
+        var $currentPage = $('section[data-id="' + currentPageId + '"]');
 
-            // Check if the current page is same as the next page then do not do the animation
-            // else reset the 'isAnimatiing' flag
-            if (tempPageIndex != currentPageId) {
-                isAnimating = true;
+        // NEXT PAGE
+        currentPageId = gotoPage;
 
-                $pageWrapper.data('current', currentPageId);
+        // Check if the current page is same as the next page then do not do the animation
+        // else reset the 'isAnimatiing' flag
+        if (tempPageIndex != currentPageId) {
+            isAnimating = true;
 
-                // Next page to be animated.
+            $pageWrapper.data('current', currentPageId);
 
-                var $nextPage = $('section[data-id='+currentPageId+']').addClass('section-active');
+            // Next page to be animated.
 
-                $nextPage.scrollTop(0);
+            var $nextPage = $('section[data-id=' + currentPageId + ']').addClass('section-active');
 
-                $currentPage.addClass(outClass).on(animEndEventName, function() {
-                    $currentPage.off(animEndEventName);
-                    endCurrentPage = true;
-                    if(endNextPage) {
-                        onEndAnimation($pageWrapper, $nextPage, $currentPage);
-                        endCurrentPage = false;
-                    }
-                });
+            $nextPage.scrollTop(0);
 
-                $nextPage.addClass(inClass).on(animEndEventName, function() {
-                    $nextPage.off(animEndEventName);
-                    endNextPage = true;
-                    if(endCurrentPage) {
-                        onEndAnimation($pageWrapper, $nextPage, $currentPage);
-                        endNextPage = false;
-                        isAnimating = false;
-                    }
-                });
+            $currentPage.addClass(outClass).on(animEndEventName, function () {
+                $currentPage.off(animEndEventName);
+                endCurrentPage = true;
+                if (endNextPage) {
+                    onEndAnimation($pageWrapper, $nextPage, $currentPage);
+                    endCurrentPage = false;
+                }
+            });
 
-            }
-            else {
-                isAnimating = false;
-            }
+            $nextPage.addClass(inClass).on(animEndEventName, function () {
+                $nextPage.off(animEndEventName);
+                endNextPage = true;
+                if (endCurrentPage) {
+                    onEndAnimation($pageWrapper, $nextPage, $currentPage);
+                    endNextPage = false;
+                    isAnimating = false;
+                }
+            });
+
+        } else {
+            isAnimating = false;
+        }
 
 
         // Check if the animation is supported by browser and reset the pages.
-        if(!support) {
+        if (!support) {
             onEndAnimation($currentPage, $nextPage);
         }
 
@@ -533,7 +530,7 @@ var PageTransitions = (function ($, options) {
     }
 
     return {
-        init : init,
+        init: init,
     };
 
 })(jQuery);
