@@ -309,7 +309,7 @@
 
         //Google Maps
         $("#map").googleMap({
-            zoom: 12
+            zoom: 10
         }).addMarker({
             coords: [33.55021800172538, 73.12401023084115]
         });
