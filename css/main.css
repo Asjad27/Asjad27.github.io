@@ -3049,6 +3049,7 @@ p {
 }
 
 .collapsible {
+    width: 100%;
     cursor: pointer;
     font-size: 1em;
     color: #d5d5d5;
