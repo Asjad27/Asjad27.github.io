@@ -30,8 +30,105 @@
     }
 
     gtag('js', new Date());
+    gtag('config', 'G-ZN99QQR4DB', {
+        'send_page_view': true,
+        'anonymize_ip': true,
+        'cookie_expires': 28 * 24 * 60 * 60, // 28 days
+        'debug_mode': false,
+        'page_path': '/'
+    });
 
-    gtag('config', 'G-ZN99QQR4DB');
+    // Track section changes
+    function trackSectionChange(sectionId) {
+        gtag('event', 'page_view', {
+            'page_title': sectionId.charAt(0).toUpperCase() + sectionId.slice(1),
+            'page_location': window.location.href + '#' + sectionId,
+            'page_path': '/' + sectionId
+        });
+    }
+
+    // Track initial section
+    if (window.location.hash) {
+        trackSectionChange(window.location.hash.substring(1));
+    } else {
+        trackSectionChange('home');
+    }
+
+    // Track section changes on navigation
+    document.querySelectorAll('.nav-anim').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const section = this.getAttribute('href').substring(1);
+            trackSectionChange(section);
+        });
+    });
+
+    // Track section changes on arrow navigation
+    document.querySelector('.lmpixels-arrow-right').addEventListener('click', function() {
+        const currentSection = document.querySelector('.animated-section.active');
+        if (currentSection) {
+            trackSectionChange(currentSection.getAttribute('data-id'));
+        }
+    });
+
+    document.querySelector('.lmpixels-arrow-left').addEventListener('click', function() {
+        const currentSection = document.querySelector('.animated-section.active');
+        if (currentSection) {
+            trackSectionChange(currentSection.getAttribute('data-id'));
+        }
+    });
+
+    // Track scroll depth
+    let scrollDepthTriggered = {
+        25: false,
+        50: false,
+        75: false,
+        90: false
+    };
+
+    window.addEventListener('scroll', function() {
+        let scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+        
+        Object.keys(scrollDepthTriggered).forEach(depth => {
+            if (scrollPercent >= depth && !scrollDepthTriggered[depth]) {
+                const currentSection = document.querySelector('.animated-section.active');
+                gtag('event', 'scroll_depth', {
+                    'event_category': 'engagement',
+                    'event_label': depth + '%',
+                    'value': depth,
+                    'section': currentSection ? currentSection.getAttribute('data-id') : 'unknown'
+                });
+                scrollDepthTriggered[depth] = true;
+            }
+        });
+    });
+
+    // Track time on page per section
+    let sectionStartTime = new Date();
+    let currentSection = document.querySelector('.animated-section.active')?.getAttribute('data-id') || 'home';
+
+    function trackSectionTime() {
+        const timeSpent = Math.round((new Date() - sectionStartTime) / 1000);
+        gtag('event', 'section_time_spent', {
+            'event_category': 'engagement',
+            'event_label': 'Time in Section',
+            'value': timeSpent,
+            'section': currentSection
+        });
+    }
+
+    // Update section time tracking when section changes
+    document.querySelectorAll('.nav-anim').forEach(link => {
+        link.addEventListener('click', function() {
+            trackSectionTime();
+            currentSection = this.getAttribute('href').substring(1);
+            sectionStartTime = new Date();
+        });
+    });
+
+    // Track final section time when leaving page
+    window.addEventListener('beforeunload', function() {
+        trackSectionTime();
+    });
 </script>
 
 <body>
@@ -97,21 +194,30 @@
 
             <div class="social-links">
                 <ul>
-                    <li><a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank"><i
-                            class="fab fa-linkedin-in"></i></a></li>
-                    <li><a href="https://github.com/Asjad27/" target="_blank"><i
-                            class="fab fa-github"></i></a></li>
-                    <li><a href="https://www.facebook.com/asjad.asif.27/" target="_blank"><i
-                            class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="https://twitter.com/asjad_27" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="https://www.instagram.com/asjad27/" target="_blank"><i
-                            class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank" 
+                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'LinkedIn' });">
+                           <i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="https://github.com/Asjad27/" target="_blank"
+                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'GitHub' });">
+                           <i class="fab fa-github"></i></a></li>
+                    <li><a href="https://www.facebook.com/asjad.asif.27/" target="_blank"
+                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Facebook' });">
+                           <i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://twitter.com/asjad_27" target="_blank"
+                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Twitter' });">
+                           <i class="fab fa-twitter"></i></a></li>
+                    <li><a href="https://www.instagram.com/asjad27/" target="_blank"
+                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Instagram' });">
+                           <i class="fab fa-instagram"></i></a></li>
                 </ul>
             </div>
 
             <div class="header-buttons">
                 <a class="btn btn-primary" download
-                   href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1">Download CV</a>
+                   href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
+                   onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Download CV Button' });">
+                   Download CV
+                </a>
             </div>
 
             <div class="copyrights">© 2022 All rights reserved.</div>
@@ -1401,5 +1507,37 @@
 
 <script src="js/validator.js"></script>
 <script src="js/main.js"></script>
+
+<script>
+    // Track portfolio item clicks
+    document.querySelectorAll('.portfolio-item-img a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            let projectName = this.parentElement.parentElement.querySelector('.name').textContent;
+            gtag('event', 'portfolio_click', {
+                'event_category': 'portfolio',
+                'event_label': projectName
+            });
+        });
+    });
+
+    // Track section navigation
+    document.querySelectorAll('.nav-anim').forEach(link => {
+        link.addEventListener('click', function(e) {
+            let section = this.getAttribute('href').substring(1);
+            gtag('event', 'section_navigation', {
+                'event_category': 'navigation',
+                'event_label': section
+            });
+        });
+    });
+
+    // Track mobile menu toggle
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        gtag('event', 'mobile_menu_toggle', {
+            'event_category': 'navigation',
+            'event_label': 'Mobile Menu'
+        });
+    });
+</script>
 </body>
 </html>
