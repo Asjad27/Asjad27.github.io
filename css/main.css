@@ -10,10 +10,14 @@ html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     scroll-behavior: smooth;
-    overflow-x: clip;
+    /* `clip` avoids scroll containment quirks; `hidden` fallback for older WebKit. */
+    overflow-x: hidden;
     scrollbar-gutter: stable;
     scrollbar-color: var(--muted-2) transparent;
     scrollbar-width: thin;
+}
+@supports (overflow: clip) {
+    html { overflow-x: clip; }
 }
 
 /* WebKit / Blink fallback (Chrome, Edge, Safari) */

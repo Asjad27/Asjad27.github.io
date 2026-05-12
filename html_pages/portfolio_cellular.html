@@ -33,27 +33,26 @@
         } catch (e) {}
     })();
     </script>
+    <!-- Google tag (gtag.js): loads only on production; see ../js/analytics-init.js -->
+    <script src="../js/analytics-init.js" data-cfasync="false"></script>
+    <script>
+    (function () {
+        if (!window.__analyticsEnabled || typeof gtag !== 'function') return;
+        var project = 'Cellular Network Signal Strength Mapping on Android';
+        var slug = 'cellular-signal-mapping';
+        gtag('event', 'page_view', {
+            'page_title': project,
+            'page_location': location.origin + location.pathname + '#portfolio/' + slug,
+            'page_path': '/portfolio/' + slug
+        });
+        gtag('event', 'portfolio_view', {
+            'event_category': 'portfolio',
+            'event_label': project,
+            'project': project
+        });
+    })();
+    </script>
 </head>
-
-<!-- Google tag (gtag.js): loads only on production; see ../js/analytics-init.js -->
-<script src="../js/analytics-init.js"></script>
-<script>
-(function () {
-    if (!window.__analyticsEnabled || typeof gtag !== 'function') return;
-    var project = 'Cellular Network Signal Strength Mapping on Android';
-    var slug = 'cellular-signal-mapping';
-    gtag('event', 'page_view', {
-        'page_title': project,
-        'page_location': location.origin + location.pathname + '#portfolio/' + slug,
-        'page_path': '/portfolio/' + slug
-    });
-    gtag('event', 'portfolio_view', {
-        'event_category': 'portfolio',
-        'event_label': project,
-        'project': project
-    });
-})();
-</script>
 
 <body>
 
@@ -236,7 +235,7 @@
     </div>
 </dialog>
 
-<script src="../js/main.js"></script>
+<script src="../js/main.js" data-cfasync="false"></script>
 
 </body>
 </html>
