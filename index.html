@@ -20,23 +20,22 @@
     <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZN99QQR4DB"></script>
+<!-- Google tag (gtag.js): loads only on production; see js/analytics-init.js -->
 <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'G-ZN99QQR4DB', {
+    window.__gtagConfigExtra = {
         'send_page_view': true,
         'anonymize_ip': true,
         'cookie_expires': 28 * 24 * 60 * 60, // 28 days
         'debug_mode': false,
         'page_path': '/'
-    });
+    };
+</script>
+<script src="js/analytics-init.js"></script>
+<script>
+(function () {
+    if (!window.__analyticsEnabled) {
+        return;
+    }
 
     // Track section changes
     function trackSectionChange(sectionId) {
@@ -129,6 +128,7 @@
     window.addEventListener('beforeunload', function() {
         trackSectionTime();
     });
+})();
 </script>
 
 <body>
@@ -184,12 +184,6 @@
                         <span class="link-text">Portfolio</span>
                     </a>
                 </li>
-                <!--                <li>-->
-                <!--                    <a class="nav-anim" href="#blog">-->
-                <!--                        <span class="menu-icon lnr lnr-book"></span>-->
-                <!--                        <span class="link-text">Blog</span>-->
-                <!--                    </a>-->
-                <!--                </li>-->
             </ul>
 
             <div class="social-links">
@@ -1446,49 +1440,6 @@
                 </section>
                 <!-- End of Portfolio Subpage -->
 
-                <!-- Blog Subpage -->
-<!--                <section class="animated-section" data-id="blog">-->
-                <!--                    <div class="section-content">-->
-                <!--                        <div class="page-title">-->
-                <!--                            <h2>Blog</h2>-->
-                <!--                        </div>-->
-
-                <!--                        <div class="row">-->
-                <!--                            <div class="col-xs-12 col-sm-12">-->
-                <!--                                <div class="blog-masonry two-columns clearfix">-->
-
-                <!--                                    &lt;!&ndash; Blog Post 1 &ndash;&gt;-->
-                <!--                                    <div class="item post-1">-->
-                <!--                                        <div class="blog-card">-->
-                <!--                                            <div class="media-block">-->
-                <!--                                                <div class="category">-->
-                <!--                                                    <a href="#" title="View all posts in Tech">Tech</a>-->
-                <!--                                                </div>-->
-                <!--                                                <a href="html_pages/blog_coming_soon">-->
-                <!--                                                    <img alt="coming_soon"-->
-                <!--                                                         class="size-blog-masonry-image-two-c"-->
-                <!--                                                         src="img/blog/coming_soon.jpg" title=""/>-->
-                <!--                                                    <div class="mask"></div>-->
-                <!--                                                </a>-->
-                <!--                                            </div>-->
-                <!--                                            <div class="post-info">-->
-                <!--                                                <div class="post-date">09 August 2022</div>-->
-                <!--                                                <a href="html_pages/blog_coming_soon">-->
-                <!--                                                    <h4 class="blog-item-title">First Blog Post Coming Soon!</h4>-->
-                <!--                                                </a>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-                <!--                                    &lt;!&ndash; End of Blog Post 1 &ndash;&gt;-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-
-
-                <!--                </section>-->
-                <!-- End of Blog Subpage -->
-
             </div>
         </div>
 
@@ -1511,6 +1462,11 @@
 <script src="js/main.js"></script>
 
 <script>
+(function () {
+    if (!window.__analyticsEnabled) {
+        return;
+    }
+
     // Track portfolio item clicks
     document.querySelectorAll('.portfolio-item-img a').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -1540,6 +1496,7 @@
             'event_label': 'Mobile Menu'
         });
     });
+})();
 </script>
 </body>
 </html>

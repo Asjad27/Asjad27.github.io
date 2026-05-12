@@ -125,21 +125,10 @@
             mobileMenuHide();
         });
 
-        // Sidebar toggle
-        $('.sidebar-toggle').on("click", function () {
-            $('#blog-sidebar').toggleClass('open');
-        });
-
         // Initialize Portfolio grid
         var $portfolio_container = $(".portfolio-grid");
         $portfolio_container.imagesLoaded(function () {
             portfolio_init(this);
-        });
-
-        // Blog grid init
-        var $container = $(".blog-masonry");
-        $container.imagesLoaded(function () {
-            $container.masonry();
         });
 
         customScroll();
