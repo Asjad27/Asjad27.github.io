@@ -1,3 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Satellite Tracker · Asjad Asif Jah</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Satellite Tracker — real-time visualization of satellites in orbit.">
+    <meta name="author" content="Asjad Asif Jah">
+    <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="apple-touch-icon" href="../img/main_photo.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="../css/fonts/fontawesome-free-5.12.1-web/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts/linear-icons-font/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/main.css" rel="stylesheet" type="text/css">
+
+    <script>
+    (function () {
+        try {
+            var t = localStorage.getItem('theme');
+            if (t === 'light' || t === 'dark') {
+                document.documentElement.setAttribute('data-theme', t);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        } catch (e) {}
+    })();
+    </script>
+</head>
+
 <!-- Google tag (gtag.js): loads only on production; see ../js/analytics-init.js -->
 <script src="../js/analytics-init.js"></script>
 <script>
@@ -17,68 +54,122 @@
     });
 })();
 </script>
-<div class="ajax-page-content" id="ajax-page">
-    <div class="ajax-page-wrapper">
-        <div class="ajax-page-nav">
-            <div class="nav-item ajax-page-prev-next">
-                <a class="ajax-page-load" href="../html_pages/portfolio_ckids.html"><i class="lnr lnr-chevron-left"></i></a>
-                <a class="ajax-page-load" href="../html_pages/portfolio_cellular.html"><i
-                        class="lnr lnr-chevron-right"></i></a>
-            </div>
-            <div class="nav-item ajax-page-close-button">
-                <a href="#" id="ajax-page-close-button"><i class="lnr lnr-cross"></i></a>
-            </div>
-        </div>
 
-        <div class="ajax-page-title">
+<body>
+
+<header class="nav" id="site-nav">
+    <div class="container nav-inner">
+        <a class="brand" href="../index.html#home" aria-label="Asjad Asif Jah · home">
+            <span class="brand-mark">AAJ</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+            <a class="nav-anim" href="../index.html#home" data-section="home">Home</a>
+            <a class="nav-anim" href="../index.html#about-me" data-section="about-me">About</a>
+            <a class="nav-anim" href="../index.html#resume" data-section="resume">Resume</a>
+            <a class="nav-anim" href="../index.html#portfolio" data-section="portfolio">Portfolio</a>
+        </nav>
+        <div class="nav-spacer"></div>
+        <div class="nav-tools">
+            <button class="cmdk-hint" id="open-palette" type="button" aria-label="Open command palette">
+                <span>Search</span>
+                <kbd>⌘</kbd><kbd>K</kbd>
+            </button>
+            <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme (t)">
+                <svg class="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.07-7.07-1.41 1.41M6.34 17.66l-1.41 1.41m12.73 0-1.41-1.41M6.34 6.34 4.93 4.93"/></svg>
+            </button>
+            <a class="btn btn-primary" download
+               href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
+               onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Download CV Button' });">
+                Download CV <span aria-hidden="true">↓</span>
+            </a>
+            <button class="hamburger" id="open-drawer" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="brand"><span class="brand-mark">AAJ</span></span>
+        <button class="icon-btn" id="close-drawer" type="button" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+        </button>
+    </div>
+    <nav class="drawer-links" aria-label="Mobile">
+        <a href="../index.html#home" data-section="home">Home <span class="key">g h</span></a>
+        <a href="../index.html#about-me" data-section="about-me">About <span class="key">g a</span></a>
+        <a href="../index.html#resume" data-section="resume">Resume <span class="key">g r</span></a>
+        <a href="../index.html#portfolio" data-section="portfolio">Portfolio <span class="key">g p</span></a>
+    </nav>
+    <div class="drawer-section">
+        <button class="btn btn-secondary" id="drawer-open-palette" type="button">Open palette</button>
+        <button class="btn btn-secondary" id="drawer-theme-toggle" type="button">Toggle theme</button>
+        <a class="btn btn-primary" download
+           href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
+           onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Drawer Download CV' });">
+            Download CV ↓
+        </a>
+    </div>
+</aside>
+
+<main>
+<section class="section">
+    <div class="container">
+
+        <div class="project-header reveal">
+            <a class="back" href="../index.html#portfolio" data-back="portfolio">← back to portfolio</a>
+            <div class="crumb mono">
+                <a href="../index.html#portfolio">portfolio</a><span class="sep">/</span><span class="current">satellite-tracker</span>
+            </div>
             <h1>Satellite Tracker</h1>
         </div>
 
-        <div class="row">
-            <div class="col-sm-8 col-md-8 portfolio-block">
-                <div class="owl-carousel portfolio-page-carousel">
-                    <div class="item">
-                        <img alt="satellite_tracker" src="../img/portfolio/satellite_tracker.png"/>
+        <nav class="prev-next mono" aria-label="Project navigation">
+            <a href="portfolio_ckids.html">← prev: ckids-microtelcos</a>
+            <a href="portfolio_cellular.html">next: cellular-signal-mapping →</a>
+        </nav>
+
+        <div class="project-grid">
+            <div class="project-media reveal">
+                <div class="gallery">
+                    <div class="gallery-track">
+                        <div class="gallery-slide"><img src="../img/portfolio/satellite_tracker.png" alt="satellite_tracker" loading="lazy"></div>
+                    </div>
+                    <div class="gallery-ctrls">
+                        <span class="gallery-counter mono" data-gallery-counter>1 / 1</span>
                     </div>
                 </div>
-
-                <div class="portfolio-page-video embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/5trjJ1A569s"></iframe>
+                <div class="yt-embed">
+                    <iframe src="https://www.youtube.com/embed/5trjJ1A569s"
+                            title="Satellite Tracker — demo"
+                            loading="lazy"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
                 </div>
-
-                <script type="text/javascript">
-                    jQuery(document).ready(function ($) {
-                        $('.portfolio-page-carousel').imagesLoaded(function () {
-                            $('.portfolio-page-carousel').owlCarousel({
-                                smartSpeed: 1200,
-                                items: 1,
-                                loop: true,
-                                dots: true,
-                                nav: true,
-                                navText: false,
-                                margin: 10,
-                                autoHeight: true
-                            });
-                        });
-                    });
-                </script>
             </div>
-            <div class="col-sm-4 col-md-4 portfolio-block">
-                <!-- Project Description -->
-                <div class="project-description">
-                    <div class="block-title">
-                        <h3>Description</h3>
-                    </div>
-                    <ul class="project-general-info">
-                        <li><p><i class="fa fa-user"></i> Asjad Asif Jah</p></li>
-                        <li><p><i class="fa fa-globe"></i> <a
-                                href="https://www.youtube.com/watch?v=5trjJ1A569s"
-                                target="_blank">Youtube</a>
-                        </p></li>
-                        <li><p><i class="fa fa-calendar"></i> November 2020</p></li>
-                    </ul>
 
-                    <p class="text-justify">Satellite Tracker is an application that allows the user to visualize
+            <aside class="project-meta reveal">
+                <div class="whoami">
+                    <div class="whoami-row">
+                        <span class="k">author</span>
+                        <span class="v">Asjad Asif Jah</span>
+                    </div>
+                    <div class="whoami-row">
+                        <span class="k">link</span>
+                        <span class="v"><a href="https://www.youtube.com/watch?v=5trjJ1A569s" target="_blank" rel="noopener">Youtube</a></span>
+                    </div>
+                    <div class="whoami-row">
+                        <span class="k">date</span>
+                        <span class="v">November 2020</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-block">
+                    <div class="block-title">Description</div>
+                    <p>Satellite Tracker is an application that allows the user to visualize
                         (plotted on a map) the real-time locations and historical as well as predicted orbital paths of
                         satellites orbiting around the earth. It consists of a frontend for the visualization, a backend
                         for processing the raw data and calculating the satellites' positions in real-time, and a
@@ -90,26 +181,93 @@
                         was to build a solution that allows the user to easily explore and visualize hundreds of
                         satellites in orbit above us, which we daily use in one way or another, be it for navigation or
                         watching our favorite television show.</p>
-                    <!-- /Project Description -->
-
-                    <!-- Tags -->
-                    <div class="tags-block">
-                        <div class="block-title">
-                            <h3>Tags</h3>
-                        </div>
-                        <ul class="tags">
-                            <li><a>SpaceTrack</a></li>
-                            <li><a>Celestrak</a></li>
-                            <li><a>Apache Spark</a></li>
-                            <li><a>MySQL</a></li>
-                            <li><a>Django</a></li>
-                            <li><a>Angular</a></li>
-                        </ul>
-                    </div>
-                    <!-- /Tags -->
                 </div>
-                <!-- Project Description -->
-            </div>
+
+                <div class="sidebar-block">
+                    <div class="block-title">Tags</div>
+                    <ul class="tags reset-list">
+                        <li><span class="chip">SpaceTrack</span></li>
+                        <li><span class="chip">Celestrak</span></li>
+                        <li><span class="chip">Apache Spark</span></li>
+                        <li><span class="chip">MySQL</span></li>
+                        <li><span class="chip">Django</span></li>
+                        <li><span class="chip">Angular</span></li>
+                    </ul>
+                </div>
+            </aside>
         </div>
     </div>
-</div>
+</section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <div class="footer-sig mono">
+            <span class="accent-text">//</span> © 2022–2026 asjadjah · built with html + css + vanilla js
+        </div>
+        <div class="footer-tools">
+            <div class="socials" aria-label="Social profiles">
+                <a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                <a href="https://github.com/Asjad27/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/asjad.asif.27/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="https://twitter.com/asjad_27" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/asjad27/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <button class="icon-btn" id="open-shortcuts" type="button" aria-label="Keyboard shortcuts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+            </button>
+        </div>
+    </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Video player">
+    <div class="dialog-inner">
+        <div class="dialog-head">
+            <span class="dialog-title" id="lightbox-title">YouTube</span>
+            <button class="dialog-close" type="button" aria-label="Close" data-close-lightbox>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+            </button>
+        </div>
+        <div class="iframe-wrap"><iframe id="lightbox-iframe" src="" title="Video" allowfullscreen></iframe></div>
+    </div>
+</dialog>
+
+<dialog class="palette" id="palette" aria-label="Command palette">
+    <div class="palette-inner">
+        <div class="palette-input-wrap">
+            <svg class="ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-3.5-3.5"/></svg>
+            <input class="palette-input" id="palette-input" type="text" placeholder="Jump to a section, link, or action..." autocomplete="off">
+        </div>
+        <div class="palette-list" id="palette-list"></div>
+        <div class="palette-footer">
+            <span><kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>↵</kbd> select · <kbd>esc</kbd> close</span>
+            <span>asjadjah</span>
+        </div>
+    </div>
+</dialog>
+
+<dialog class="shortcuts" id="shortcuts" aria-label="Keyboard shortcuts">
+    <div class="shortcuts-inner">
+        <div class="shortcuts-head">
+            <h3>Keyboard shortcuts</h3>
+            <button class="icon-btn" type="button" aria-label="Close" data-close-shortcuts>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+            </button>
+        </div>
+        <div class="shortcuts-body">
+            <div class="shortcut-row"><span>Open command palette</span><span class="keys"><kbd>⌘</kbd><kbd>K</kbd></span></div>
+            <div class="shortcut-row"><span>Go to Home</span><span class="keys"><kbd>g</kbd><kbd>h</kbd></span></div>
+            <div class="shortcut-row"><span>Go to About</span><span class="keys"><kbd>g</kbd><kbd>a</kbd></span></div>
+            <div class="shortcut-row"><span>Go to Resume</span><span class="keys"><kbd>g</kbd><kbd>r</kbd></span></div>
+            <div class="shortcut-row"><span>Go to Portfolio</span><span class="keys"><kbd>g</kbd><kbd>p</kbd></span></div>
+            <div class="shortcut-row"><span>Toggle theme</span><span class="keys"><kbd>t</kbd></span></div>
+            <div class="shortcut-row"><span>This dialog</span><span class="keys"><kbd>?</kbd></span></div>
+        </div>
+        <div class="shortcuts-note mono" id="shortcuts-note">// keyboard shortcuts work best on devices with a physical keyboard</div>
+    </div>
+</dialog>
+
+<script src="../js/main.js"></script>
+
+</body>
+</html>

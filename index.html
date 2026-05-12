@@ -1,1502 +1,1130 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Asjad Asif Jah</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
-    <meta content="Asjad Asif Jah - Portfolio" name="description"/>
-    <meta content="resume, cv" name="keywords"/>
-    <meta content="Asjad Asif Jah" name="author"/>
-    <link href="img/main_photo.jpg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Asjad Asif Jah - Portfolio">
+    <meta name="keywords" content="resume, cv">
+    <meta name="author" content="Asjad Asif Jah">
+    <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)">
 
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="img/main_photo.jpg">
 
-    <link href="css/reset.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
-    <link href="css/animations.css" rel="stylesheet" type="text/css">
-    <link href="css/perfect-scrollbar.css" rel="stylesheet" type="text/css">
-    <link href="css/owl.carousel.css" rel="stylesheet" type="text/css">
-    <link href="css/magnific-popup.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="css/fonts/fontawesome-free-5.12.1-web/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/fonts/linear-icons-font/style.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
+
+    <script>
+    (function () {
+        try {
+            var t = localStorage.getItem('theme');
+            if (t === 'light' || t === 'dark') {
+                document.documentElement.setAttribute('data-theme', t);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        } catch (e) {}
+    })();
+    </script>
 </head>
 
-<!-- Google tag (gtag.js): loads only on production; see js/analytics-init.js -->
 <script>
     window.__gtagConfigExtra = {
         'send_page_view': true,
         'anonymize_ip': true,
-        'cookie_expires': 28 * 24 * 60 * 60, // 28 days
+        'cookie_expires': 28 * 24 * 60 * 60,
         'debug_mode': false,
         'page_path': '/'
     };
 </script>
 <script src="js/analytics-init.js"></script>
-<script>
-(function () {
-    if (!window.__analyticsEnabled) {
-        return;
-    }
-
-    // Track section changes
-    function trackSectionChange(sectionId) {
-        gtag('event', 'page_view', {
-            'page_title': sectionId.charAt(0).toUpperCase() + sectionId.slice(1),
-            'page_location': window.location.href + '#' + sectionId,
-            'page_path': '/' + sectionId
-        });
-    }
-
-    // Track initial section
-    if (window.location.hash) {
-        trackSectionChange(window.location.hash.substring(1));
-    } else {
-        trackSectionChange('home');
-    }
-
-    // Track section changes on navigation
-    document.querySelectorAll('.nav-anim').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const section = this.getAttribute('href').substring(1);
-            trackSectionChange(section);
-        });
-    });
-
-    // Track section changes on arrow navigation
-    document.querySelector('.lmpixels-arrow-right').addEventListener('click', function() {
-        const currentSection = document.querySelector('.animated-section.active');
-        if (currentSection) {
-            trackSectionChange(currentSection.getAttribute('data-id'));
-        }
-    });
-
-    document.querySelector('.lmpixels-arrow-left').addEventListener('click', function() {
-        const currentSection = document.querySelector('.animated-section.active');
-        if (currentSection) {
-            trackSectionChange(currentSection.getAttribute('data-id'));
-        }
-    });
-
-    // Track scroll depth
-    let scrollDepthTriggered = {
-        25: false,
-        50: false,
-        75: false,
-        90: false
-    };
-
-    window.addEventListener('scroll', function() {
-        let scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
-        
-        Object.keys(scrollDepthTriggered).forEach(depth => {
-            if (scrollPercent >= depth && !scrollDepthTriggered[depth]) {
-                const currentSection = document.querySelector('.animated-section.active');
-                gtag('event', 'scroll_depth', {
-                    'event_category': 'engagement',
-                    'event_label': depth + '%',
-                    'value': depth,
-                    'section': currentSection ? currentSection.getAttribute('data-id') : 'unknown'
-                });
-                scrollDepthTriggered[depth] = true;
-            }
-        });
-    });
-
-    // Track time on page per section
-    let sectionStartTime = new Date();
-    let currentSection = document.querySelector('.animated-section.active')?.getAttribute('data-id') || 'home';
-
-    function trackSectionTime() {
-        const timeSpent = Math.round((new Date() - sectionStartTime) / 1000);
-        gtag('event', 'section_time_spent', {
-            'event_category': 'engagement',
-            'event_label': 'Time in Section',
-            'value': timeSpent,
-            'section': currentSection
-        });
-    }
-
-    // Update section time tracking when section changes
-    document.querySelectorAll('.nav-anim').forEach(link => {
-        link.addEventListener('click', function() {
-            trackSectionTime();
-            currentSection = this.getAttribute('href').substring(1);
-            sectionStartTime = new Date();
-        });
-    });
-
-    // Track final section time when leaving page
-    window.addEventListener('beforeunload', function() {
-        trackSectionTime();
-    });
-})();
-</script>
 
 <body>
-<!-- Animated Background -->
-<div class="lm-animated-bg" style="background-image: url(img/main_bg.png);"></div>
-<!-- /Animated Background -->
 
-<!-- Loading animation -->
-<div class="preloader">
-    <div class="preloader-animation">
-        <div class="preloader-spinner">
+<!-- ============================== TOP NAV ============================== -->
+<header class="nav" id="site-nav">
+    <div class="container nav-inner">
+        <a class="brand" href="#home" aria-label="Asjad Asif Jah · home">
+            <span class="brand-mark">AAJ</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+            <a class="nav-anim" href="#home" data-section="home">Home</a>
+            <a class="nav-anim" href="#about-me" data-section="about-me">About</a>
+            <a class="nav-anim" href="#resume" data-section="resume">Resume</a>
+            <a class="nav-anim" href="#portfolio" data-section="portfolio">Portfolio</a>
+        </nav>
+        <div class="nav-spacer"></div>
+        <div class="nav-tools">
+            <button class="cmdk-hint" id="open-palette" type="button" aria-label="Open command palette">
+                <span>Search</span>
+                <kbd>⌘</kbd><kbd>K</kbd>
+            </button>
+            <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme (t)">
+                <svg class="theme-icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="theme-icon-light" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.07-7.07-1.41 1.41M6.34 17.66l-1.41 1.41m12.73 0-1.41-1.41M6.34 6.34 4.93 4.93"/></svg>
+            </button>
+            <a class="btn btn-primary" id="cv-cta" download
+               href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
+               onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Download CV Button' });">
+                Download CV
+                <span aria-hidden="true">↓</span>
+            </a>
+            <button class="hamburger" id="open-drawer" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </div>
-</div>
-<!-- /Loading animation -->
-
-<div class="page">
-    <div class="page-content">
-
-        <header class="header mobile-menu-hide" id="site_header">
-            <div class="header-content">
-                <div class="header-photo">
-                    <img alt="Asjad Asif Jah" src="img/main_photo.jpg">
-                </div>
-                <div class="header-titles">
-                    <h2>Asjad Asif Jah</h2>
-                    <h4>Head of Engineering</h4>
-                </div>
-            </div>
-
-            <ul class="main-menu">
-                <li class="active">
-                    <a class="nav-anim" href="#home">
-                        <span class="menu-icon lnr lnr-home"></span>
-                        <span class="link-text">Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-anim" href="#about-me">
-                        <span class="menu-icon lnr lnr-user"></span>
-                        <span class="link-text">About Me</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-anim" href="#resume">
-                        <span class="menu-icon lnr lnr-graduation-hat"></span>
-                        <span class="link-text">Resume</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-anim" href="#portfolio">
-                        <span class="menu-icon lnr lnr-briefcase"></span>
-                        <span class="link-text">Portfolio</span>
-                    </a>
-                </li>
-            </ul>
-
-            <div class="social-links">
-                <ul>
-                    <li><a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank" 
-                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'LinkedIn' });">
-                           <i class="fab fa-linkedin-in"></i></a></li>
-                    <li><a href="https://github.com/Asjad27/" target="_blank"
-                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'GitHub' });">
-                           <i class="fab fa-github"></i></a></li>
-                    <li><a href="https://www.facebook.com/asjad.asif.27/" target="_blank"
-                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Facebook' });">
-                           <i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="https://twitter.com/asjad_27" target="_blank"
-                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Twitter' });">
-                           <i class="fab fa-twitter"></i></a></li>
-                    <li><a href="https://www.instagram.com/asjad27/" target="_blank"
-                           onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Instagram' });">
-                           <i class="fab fa-instagram"></i></a></li>
-                </ul>
-            </div>
-
-            <div class="header-buttons">
-                <a class="btn btn-primary" download
-                   href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
-                   onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Download CV Button' });">
-                   Download CV
-                </a>
-            </div>
-
-            <div class="copyrights">© 2022 All rights reserved.</div>
-        </header>
-
-        <!-- Mobile Navigation -->
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <!-- End Mobile Navigation -->
-
-        <!-- Arrows Nav -->
-        <div class="lmpixels-arrows-nav">
-            <div class="lmpixels-arrow-right"><i class="lnr lnr-chevron-right"></i></div>
-            <div class="lmpixels-arrow-left"><i class="lnr lnr-chevron-left"></i></div>
-        </div>
-        <!-- End Arrows Nav -->
-
-        <div class="content-area">
-            <div class="animated-sections">
-                <!-- Home Subpage -->
-                <section class="animated-section start-page" data-id="home" id="home">
-                    <div class="section-content vcentered">
-
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="title-block">
-                                    <h2>Asjad Asif Jah</h2>
-                                    <div class="owl-carousel text-rotation">
-                                        <div class="item">
-                                            <div class="sp-subtitle">Head of Engineering</div>
-                                        </div>
-                                        
-                                        <div class="item">
-                                            <div class="sp-subtitle">Engineering Manager</div>
-                                        </div>
-
-                                        <div class="item">
-                                            <div class="sp-subtitle">Technical Lead</div>
-                                        </div>
-
-                                        <div class="item">
-                                            <div class="sp-subtitle">Fullstack Engineer</div>
-                                        </div>
-
-                                        <div class="item">
-                                            <div class="sp-subtitle">Spatial Application Engineer</div>
-                                        </div>
-
-                                        <div class="item">
-                                            <div class="sp-subtitle">Data Scientist</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-                <!-- End of Home Subpage -->
-
-                <!-- About Me Subpage -->
-                <section class="animated-section" data-id="about-me" id="about-me">
-                    <div class="section-content">
-
-                        <!-- About Me -->
-                        <div class="page-title">
-                            <h2>About <span>Me</span></h2>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-7">
-
-                                <p>My story began when I completed my undergraduate degree at the National University of
-                                    Sciences and Technology (NUST) Islamabad in 2016. In 2020, I received the Fulbright
-                                    Scholarship for my Master's in Spatial Data Science at the University of Southern
-                                    California. During my graduate degree, I focused on integrating Spatial Data with
-                                    Machine Learning and Artificial Intelligence to solve geospatial problems.</p>
-
-                                <p>After graduating in 2016, I started working as a back-end software engineer for the
-                                    first couple of years of my career, then gradually moved towards fullstack software
-                                    engineering roles. During my career, I have architected and built scalable software
-                                    systems from scratch, writing front-end and back-end code, leading a team of
-                                    developers, performing DevOps, and ensuring customer satisfaction. I paused my
-                                    career in 2020 at the level of Senior Software Engineer after receiving the
-                                    Fulbright Scholarship.</p>
-
-                                <p>After completing my graduate degree in May 2022, I returned to Pakistan and joined
-                                    Airlift Technologies as an Associate Engineering Manager. Since Airlift Technologies
-                                    shut down operations in July, I joined another product start-up in August called
-                                    Byte as an Engineering Manager. Byte was also not spared from the financial hit that
-                                    a lot of companies have been taking in the recent past. Now I have joined a UAE-based 
-                                    startup, Aura, working in the FinTech space. I am very enthusiastic about working at 
-                                    product start-ups, and I look forward to the next phase of my professional career.</p>
-
-                                <p>I read business and tech-related books. I am an avid PC gamer, and my favorite genre
-                                    is FPS. I also like watching sci-fi, horror, and thriller movies and series.</p>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-5">
-                                <!-- Information -->
-                                <div class="info-list">
-                                    <ul>
-                                        <li>
-                                            <span class="title"><i class="fas fa-birthday-cake"></i></span>
-                                            <span class="value">February 27</span>
-                                        </li>
-
-                                        <li>
-                                            <span class="title"><i class="fas fa-map-marked"></i></span>
-                                            <span class="value">Pakistan</span>
-                                        </li>
-
-                                        <li>
-                                            <span class="title"><i class="fas fa-mail-bulk"></i></span>
-                                            <span class="value"><a href="mailto:asjadjah@gmail.com">asjadjah@gmail.com</a></span>
-                                        </li>
-
-                                        <li>
-                                            <span class="title"><i class="fas fa-phone"></i></span>
-                                            <span class="value"><a href="tel:+923425074909">+92 342 507 4909</a></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- End of Information -->
-
-                                <div class="white-space-30"></div>
-
-                                <!-- Summary -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="block-title">
-                                            <h3>Summary</h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <p>A fullstack senior software engineer with experience working at both
-                                            start-ups and enterprises, possessing technical leadership experience and
-                                            additional skill set in spatial application development. Proven expertise in
-                                            multiple frameworks for developing state-of-the-art software and exceptional
-                                            analytical and problem-solving capabilities. A team player and an
-                                            enthusiastic individual with an initiative-driven approach to work in
-                                            particular and life in general.</p>
-                                    </div>
-                                </div>
-                                <!-- End of Summary -->
-
-                                <div class="white-space-30"></div>
-
-                                <!-- Interesting Fact -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="block-title">
-                                            <h3>Interesting <span>Fact</span></h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <p>As a kid, I collected coins of various denominations belonging to different
-                                            countries. My coin book had coins of various denominations from over 30
-                                            countries, including those from pre-partition India. I used to restore the
-                                            coins as much as possible before safely storing them in my coin book.</p>
-                                    </div>
-                                </div>
-                                <!-- End of Interesting Fact -->
-
-                                <div class="white-space-30"></div>
-                            </div>
-                        </div>
-                        <!-- End of About Me -->
-
-                        <div class="white-space-30"></div>
-
-                        <!-- What I Do-->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="block-title">
-                                    <h3>What <span>I Do</span></h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="col-inner">
-                                    <div class="info-list-w-icon">
-                                        <div class="info-block-w-icon">
-                                            <div class="ci-icon">
-                                                <i class="lnr lnr-laptop-phone"></i>
-                                            </div>
-                                            <div class="ci-text">
-                                                <h4>Fullstack Development</h4>
-                                                <p>During the course of my career, I have architected and built scalable
-                                                    software systems from scratch, writing front-end and back-end code
-                                                    and deploying them to cloud providers. I have curated applications
-                                                    that work on various platforms, including but not limited to Windows
-                                                    Desktop, Windows/Linux Server, Raspberry Pi, and Android. I have
-                                                    experience working in React and Angular for web development and
-                                                    Flutter for cross-platform development. I have built back-end
-                                                    systems in Java, Node.js, C++, and Python. </p>
-                                            </div>
-                                        </div>
-                                        <div class="info-block-w-icon">
-                                            <div class="ci-icon">
-                                                <i class="lnr lnr-database"></i>
-                                            </div>
-                                            <div class="ci-text">
-                                                <h4>Data Science</h4>
-                                                <p>I got the chance to dive deep into data science workflows and
-                                                    pipelines during my graduate degree at USC. I worked on MapReduce,
-                                                    Locality Sensitive Hashing, Recommendation Systems, Analyzing
-                                                    Massive Graphs, Mining Data Streams, Linear/Logistic Regression,
-                                                    Classification/Clustering, Bayesian Theory,
-                                                    Parametric/Non-Parametric Models, Neural Networks, Random Forests,
-                                                    Generative Models, HDFS, Apache Spark, GeoAI, Spatial Data
-                                                    Wrangling, Exploratory Spatial Data Analysis, Spatially Explicit
-                                                    Supervised/Unsupervised Learning, Spatially Explicit Neural
-                                                    Networks, Spatial Optimization, and Prescriptive Spatial Machine
-                                                    Learning to name a few.</p>
-                                            </div>
-                                        </div>
-                                        <div class="info-block-w-icon">
-                                            <div class="ci-icon">
-                                                <i class="lnr lnr-earth"></i>
-                                            </div>
-                                            <div class="ci-text">
-                                                <h4>Spatial Application Development</h4>
-                                                <p>Since I was young, I have been passionate about spatial data, how a
-                                                    computer can represent the real world, and its applications. I
-                                                    remember how excited I was when Google Earth got released in the
-                                                    early 2000s. I used to be fascinated playing around with it. I also
-                                                    remember playing Flight Simulator X when it was released, being
-                                                    interested in seeing how the real world is modeled inside the game.
-                                                    My passion has continued till today, and I am always very interested
-                                                    in solving problems that require spatial data manipulation and
-                                                    thinking about solving problems with a spatial context. The choice
-                                                    of my graduate degree was also heavily influenced by this passion.
-                                                    During my career, I have built a number of spatial applications,
-                                                    including but not limited to; a Python server application to
-                                                    generate secure, encoded, and small-sized vector map tiles,
-                                                    implementation of a graph-based routing algorithm in Java,
-                                                    development of multiple data QA Java applications to detect GIS data
-                                                    anomalies, automated language translation of map data, development
-                                                    of a mechanism to convert satellite images to raster map tiles for
-                                                    loading them offline inside an android application, and
-                                                    implementation of new features in a native C++ library for map
-                                                    rendering on Android/iOS. I have worked on various libraries and
-                                                    frameworks for spatial data manipulation and handling that run on
-                                                    different platforms; Web, Desktop, and Mobile.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="col-inner">
-                                    <div class="info-list-w-icon">
-                                        <div class="info-block-w-icon">
-                                            <div class="ci-icon">
-                                                <i class="lnr lnr-smartphone"></i>
-                                            </div>
-                                            <div class="ci-text">
-                                                <h4>Mobile Development</h4>
-                                                <p>Earlier on, I worked on native Android application development. I
-                                                    built a number of Android applications during the final year of my
-                                                    undergraduate degree as well as in the first couple of years of my
-                                                    career. During my graduate degree at USC, I took a course on Web
-                                                    Technologies that used Flutter as the primary framework. I enjoyed
-                                                    working in Dart and building cross-platform applications in Flutter.
-                                                    Although I haven't got a chance to work on Flutter in a professional
-                                                    environment, I am keen to take this opportunity when it arrives.</p>
-                                            </div>
-                                        </div>
-                                        <div class="info-block-w-icon">
-                                            <div class="ci-icon">
-                                                <i class="lnr lnr-cloud-sync"></i>
-                                            </div>
-                                            <div class="ci-text">
-                                                <h4>Cloud Deployment</h4>
-                                                <p>I have deployed applications to bare metal servers when containers
-                                                    were not widely used and understood. I got into containerization
-                                                    when I learned about Docker. I used it a lot as I realized how cool
-                                                    this technology is and gave a company-wide 2-hour overview of
-                                                    Docker, so I could explain how useful it is and should be widely
-                                                    adopted. The first platform I got my hands on for cloud deployment
-                                                    was AWS, which was a game changer for me. Moving from bare metal to
-                                                    containerization to the cloud has been quite a journey, and it has
-                                                    been a fascinating one for me. I have considerable experience using
-                                                    many AWS services, e.g., EC2, Lambda, DynamoDB, SQS, SES, S3,
-                                                    ApiGateway, and ElasticBeanStalk, to name a few.</p>
-                                            </div>
-                                        </div>
-                                        <div class="info-block-w-icon">
-                                            <div class="ci-icon">
-                                                <i class="lnr lnr-flag"></i>
-                                            </div>
-                                            <div class="ci-text">
-                                                <h4>People Management</h4>
-                                                <p>I got a chance to lead a small team of developers at Afiniti, which I
-                                                    enjoyed, and I learned I have a good sense of people management. I
-                                                    joined Airlift in a people management role, and it was a fantastic
-                                                    experience while it lasted. Later, I joined Byte as an Engineering
-                                                    Manager, again involving technical and people management
-                                                    responsibilities, and I enjoyed every part of it. Now I'm heading 
-                                                    engineering at Aura which also heavily involves people management
-                                                    responsibilities.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End of What I Do -->
-
-                        <div class="white-space-30"></div>
-
-                        <!-- Career Overview -->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-
-                                <div class="block-title">
-                                    <h3>Career <span>Overview</span></h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="fun-fact gray-default">
-                                    <i class="lnr lnr-hourglass"></i>
-                                    <h4>Years of Experience</h4>
-                                    <span class="fun-fact-block-value"><script type="text/javascript">
-                                        document.write((new Date().getFullYear()-2016).toString());</script>
-                                    </span>
-                                    <span class="fun-fact-block-text"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="fun-fact gray-default">
-                                    <i class="lnr lnr-apartment"></i>
-                                    <h4>Organizations</h4>
-                                    <span class="fun-fact-block-value">6</span>
-                                    <span class="fun-fact-block-text"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4 ">
-                                <div class="fun-fact gray-default">
-                                    <i class="lnr lnr-graduation-hat"></i>
-                                    <h4>Universities</h4>
-                                    <span class="fun-fact-block-value">2</span>
-                                    <span class="fun-fact-block-text"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4 ">
-                                <div class="fun-fact gray-default">
-                                    <i class="lnr lnr-pencil"></i>
-                                    <h4>Publications</h4>
-                                    <span class="fun-fact-block-value">1</span>
-                                    <span class="fun-fact-block-text"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4 ">
-                                <div class="fun-fact gray-default">
-                                    <i class="lnr lnr-checkmark-circle"></i>
-                                    <h4>Certifications</h4>
-                                    <span class="fun-fact-block-value">1</span>
-                                    <span class="fun-fact-block-text"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End of Career Overview -->
-
-                    </div>
-                </section>
-                <!-- End of About Me Subpage -->
-
-                <!-- Resume Subpage -->
-                <section class="animated-section" data-id="resume" id="resume">
-                    <div class="section-content">
-                        <div class="page-title">
-                            <h2>Resume</h2>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-8">
-
-                                <!-- Experience -->
-                                <div class="block-title">
-                                    <h3>Experience</h3>
-                                </div>
-
-                                <div class="timeline timeline-second-style clearfix">
-                                    <!-- Aura -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2024 - Present</h5>
-                                            <span class="item-company">Aura</span>
-                                            <span class="item-logo"><img alt="aura logo"
-                                                                         src="img/aura_finance_me_logo.jpeg"></span>
-                                            <span class="item-company">Dubai, United Arab Emirates</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Head of Engineering</h4>
-                                            <h4 class="item-title"><i class="fa fa-arrow-circle-up"></i></h4>
-                                            <h4 class="item-title">Technical Lead</h4>
-                                            <p> Started working as a technical lead and now heading engineering to build 
-                                                Aura from ground-up, architecting the core product using NestJS + React 
-                                                + AWS. Major responsibilities include:<br>
-                                                <i class="fa fa-bullseye"></i> Building and scaling the engineering team 
-                                                and infrastructure for the core product which is now generating $200,000+ 
-                                                in ARR and growing continuously <br>
-                                                <i class="fa fa-bullseye"></i> Leading the engineering team; actively 
-                                                conducting code reviews to maintain quality of the product and conducting 
-                                                regular 1:1s to ensure career growth and progression <br>
-                                                <i class="fa fa-bullseye"></i> Setting up the complete infrastructure of 
-                                                the product; built pipelines for automated testing and deployment <br>
-                                                <i class="fa fa-bullseye"></i> Setting up the core engineering processes 
-                                                and principles from scratch and continuously looking for ways to improve 
-                                                them; vetting all technical solutions and ensuring there's neither 
-                                                overengineering nor under-engineering and deep diving before taking 
-                                                technology decisions
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- End of Aura -->
-
-                                    <!-- Byte -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2022 - 2024</h5>
-                                            <span class="item-company">Byte (YC S20)</span>
-                                            <span class="item-logo"><img alt="byte logo"
-                                                                         src="img/byte_logo.jfif"></span>
-                                            <span class="item-company">Islamabad, Pakistan</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Engineering Manager</h4>
-                                            <p>Worked as an engineering manager in the Engineering team to
-                                                deliver both internally and externally used web and mobile products.
-                                                Also filled in as the fullstack team lead actively involved in
-                                                designing and developing critical features and applications using
-                                                Angular + Node.js. Led a team of 10 engineers (Fullstack + Mobile +
-                                                DevOps + QA) ensuring high-quality design, development, and deployment 
-                                                of new business functionalities through active code review and feedback. 
-                                                Also ensured the career growth of the engineers by actively working to
-                                                improve the skills of the engineering talent.</p>
-                                        </div>
-                                    </div>
-                                    <!-- End of Byte -->
-
-                                    <!-- Airlift -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2022 - 2022</h5>
-                                            <span class="item-company">Airlift Technologies</span>
-                                            <span class="item-logo"><img alt="airlift logo" src="img/airlift_logo.jfif"></span>
-                                            <span class="item-company">Islamabad, Pakistan</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Associate Engineering Manager</h4>
-                                            <p>Worked as an associate engineering manager in the Warehouse Operations
-                                                team to deliver web and mobile products used in the Airlift warehouses.
-                                                Worked as a fullstack developer with hands-on development on Angular +
-                                                Node.js. Managed a team of 6 engineers (Fullstack + Android + Automated
-                                                QA)</p>
-                                        </div>
-                                    </div>
-                                    <!-- End of Airlift -->
-
-                                    <!-- Fulbright -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2020 - 2022</h5>
-                                            <span class="item-company">The Fulbright Program</span>
-                                            <span class="item-logo"><img alt="fulbright logo"
-                                                                         src="img/fulbright_logo.jfif"></span>
-                                            <span class="item-company">Los Angeles, CA, United States</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Fulbright Scholar</h4>
-                                            <p>The Fulbright Scholarship award is a competitive program that selects
-                                                academically and professionally high-achieving individuals for a
-                                                fully-funded Master's program in the United States. The individuals
-                                                selected have a track record of accomplishment and are highly motivated
-                                                in their future goals and aspirations.</p>
-                                        </div>
-                                    </div>
-                                    <!-- End of Fulbright -->
-
-                                    <!-- Afiniti -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2019 – 2020</h5>
-                                            <span class="item-company">Afiniti</span>
-                                            <span class="item-logo"><img alt="afiniti logo" src="img/afiniti_logo.jfif"></span>
-                                            <span class="item-company">Islamabad, Pakistan</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Senior Software Engineer</h4>
-                                            <h4 class="item-title"><i class="fa fa-arrow-circle-up"></i></h4>
-                                            <h4 class="item-title">Software Engineer</h4>
-                                            <p>Worked as a fullstack software engineer in the Engineering team on the
-                                                following projects:<br>
-                                                <b><i class="fa fa-bullseye"></i> Afiniti Core - Configuration Server
-                                                    <br></b>
-                                                Role: Project Lead and Backend Developer (Node.js + C++)
-                                                Managed a team of 4 engineers (Node.js + React.js + C++)<br>
-                                                <b><i class="fa fa-bullseye"></i> Config Server – Transformation App
-                                                    <br></b>
-                                                Role: Project Lead and Backend Developer (Python)<br>
-                                                <b><i class="fa fa-bullseye"></i> Afiniti MegaACD <br></b>
-                                                Role: Fullstack Developer (Node.js + GraphQL + React.js)<br>
-                                                <b><i class="fa fa-bullseye"></i> Afiniti IME/AiRo <br></b>
-                                                Role: Backend Developer (Node.js + GraphQL)<br>
-                                                <b><i class="fa fa-bullseye"></i> Afiniti Core - Lookup Service <br></b>
-                                                Role: Backend Developer (C++)
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- End of Afiniti -->
-
-                                    <!-- LMKR -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2017 – 2019</h5>
-                                            <span class="item-company">LMKR</span>
-                                            <span class="item-logo"><img alt="lmkr logo"
-                                                                         src="img/lmkr_logo.jfif"></span>
-                                            <span class="item-company">Islamabad, Pakistan</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Application Engineer</h4>
-                                            <p>Worked as a Java software engineer for Halliburton on developing data
-                                                integration, federation, and interoperability between multiple Oil & Gas
-                                                Exploration & Production software. Key responsibilities included the
-                                                development of Teiid connectors and translators to expose data using
-                                                data virtualization, patching various modules of the application for
-                                                smooth flow of data to/from multiple connectors, extending Apache Thrift
-                                                server and client implementation in Java, C#, and C++ for various
-                                                connectors, moving Teiid connectors to Docker, development of unit and
-                                                integration tests for multiple connectors, and automation of tests after
-                                                integration with Docker.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- End of LMKR -->
-
-                                    <!-- TPL -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2016 – 2017</h5>
-                                            <span class="item-company">TPL Maps</span>
-                                            <span class="item-logo"><img alt="tpl logo" src="img/tpl_logo.jfif"></span>
-                                            <span class="item-company">Islamabad, Pakistan</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">GIS Developer</h4>
-                                            <p>Worked on a wide array of projects using Java, Python, and C++ and
-                                                implemented them on multiple platforms, including Desktop, Server, Web,
-                                                and Android. A few significant highlights include the development of a
-                                                Python server application to generate secure, encoded, and small-sized
-                                                vector map tiles, implementation of a graph-based routing algorithm in
-                                                Java, development of multiple data QA Java applications to detect GIS
-                                                data anomalies, automated language translation of map data, development
-                                                of a mechanism to convert satellite images to raster map tiles for
-                                                loading them offline inside an android application, and addition of new
-                                                features in the native C++ library for map rendering.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!-- End of TPL -->
-                                </div>
-                                <!-- End of Experience -->
-
-                                <div class="white-space-30"></div>
-
-                                <!-- Education -->
-                                <div class="block-title">
-                                    <h3>Education</h3>
-                                </div>
-
-                                <div class="timeline timeline-second-style clearfix">
-                                    <!-- USC -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2020-2022</h5>
-                                            <span class="item-company">University of Southern California</span>
-                                            <span class="item-logo"><img alt="usc logo"
-                                                                         src="img/usc_logo.jfif"></span>
-                                            <span class="item-company">Los Angeles, CA, United States</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Master of Science (M.S.) <br>Spatial Data Science
-                                            </h4>
-                                            <span class="item-company">CGPA: 4.00/4.00</span>
-                                            <span class="item-company">Fulbright Scholarship</span>
-                                            <button class="collapsible" type="button"><b>DSCI-553 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Foundations and Applications of Data Mining</b><br>
-                                                    MapReduce, Frequent Itemsets, Shingling, Minhashing, Locality
-                                                    Sensitive Hashing, Recommendation Systems, Analyzing Massive Graphs,
-                                                    Mining Data Streams, Link Analysis, Web Advertising</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button">
-                                                <b>DSCI-552 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Machine Learning for Data Science</b><br>
-                                                    Linear/Logistic Regression, Bayesian Theory, Classification/
-                                                    Clustering, Parametric/Non-Parametric Models, Supervised/
-                                                    Unsupervised Learning, Neural Networks, NLP, Random Forests,
-                                                    Generative Models</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button">
-                                                <b>DSCI-551 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Foundations of Data Management<br>
-                                                    Project:</b> <a
-                                                        href="https://youtu.be/5trjJ1A569s"
-                                                        target="_blank">Satellite Tracker</a>
-                                                    <br>Storage & File Systems, Hadoop Distributed File System (HDFS),
-                                                    Data Modeling (ER & Relational), Indexing (B+-Tree), Query
-                                                    Execution, Python Pandas, Apache Spark, Hadoop MapReduce</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button">
-                                                <b>CSCI-571 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Web Technologies</b><br>
-                                                    HTML, CSS, Javascript, JSON, Dart, Rust, WebAssembly, DOM, HTTP(S),
-                                                    Responsive Web Design, Node, Angular, React, Flutter, Android/iOS,
-                                                    Serverless, Web3</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button">
-                                                <b>SSCI-575 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Spatial Data Science<br>
-                                                    Project:</b> <a
-                                                        href="https://storymaps.arcgis.com/stories/0a82cd8897e446ac9115579ef5cdc694"
-                                                        target="_blank">Spatial Machine Learning Workflow</a>
-                                                    <br>GeoAI, Spatial Data Representation/Wrangling, Exploratory
-                                                    Spatial
-                                                    Data Analysis, Spatially Explicit Supervised/Unsupervised Learning,
-                                                    Spatially Explicit Neural Networks, Spatial Optimization,
-                                                    Prescriptive Spatial Machine Learning</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button">
-                                                <b>SSCI-582 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Spatial Databases</b><br>
-                                                    Database Architecture, Data Modeling, SQL, ESRI Databases, Spatial
-                                                    Querying, Spatial Indexing, Object-Oriented Databases, NoSQL
-                                                    Databases, Time-Enabled Spatial Databases, Spatial Big Data,
-                                                    Geospatial Infrastructure</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button">
-                                                <b>SSCI-586 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>GIS Programming and Customization</b><br>
-                                                    Python for Vector/Raster Data Manipulation, Python in ArcGIS,
-                                                    Interactive Computational Geospatial Programming, Notebooks for Web
-                                                    GIS, Real-Time Spatial Data Processing, Spatial Data in an IoT
-                                                    Era</p>
-                                            </div>
-
-                                            <button class="collapsible" type="button"><b>SSCI-581 </b>
-                                            </button>
-                                            <div class="content">
-                                                <p><b>Concepts for Spatial Thinking</b><br>
-                                                    Spatial Autocorrelation, Spatial Heterogeneity, Raster and Terrain
-                                                    Analysis, Spatial Estimation & Interpolation, Spatial Modeling,
-                                                    Modeling with Machine Learning, Geospatial Intelligence</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End of USC -->
-
-                                    <!-- NUST -->
-                                    <div class="timeline-item clearfix">
-                                        <div class="left-part">
-                                            <h5 class="item-period">2012-2016</h5>
-                                            <span class="item-company">National University of Sciences & Technology (NUST)</span>
-                                            <span class="item-logo"><img alt="nust logo"
-                                                                         src="img/nust_logo.jfif"></span>
-                                            <span class="item-company">Islamabad, Pakistan</span>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="right-part">
-                                            <h4 class="item-title">Bachelor of Engineering (B.E.)</h4>
-                                            <span class="item-company">CGPA: 3.71/4.00</span>
-                                            <span class="item-company">PEC Registered Engineer</span>
-                                        </div>
-                                    </div>
-                                    <!-- End of NUST -->
-                                </div>
-                                <!-- End of Education -->
-
-                                <div class="white-space-30"></div>
-
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4">
-                                <!-- Skills -->
-                                <div class="block-title">
-                                    <h3>Skills</h3>
-                                </div>
-
-                                <!-- Programming Languages -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Programming <span>Languages</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Java</li>
-                                    <li>C</li>
-                                    <li>C++</li>
-                                    <li>Python</li>
-                                    <li>Scala</li>
-                                    <li>TypeScript</li>
-                                    <li>JavaScript</li>
-                                </ul>
-                                <!-- End of Programming Languages -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Databases -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Databases</h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>PostgreSQL</li>
-                                    <li>MySQL</li>
-                                    <li>Oracle</li>
-                                    <li>SQL Server</li>
-                                    <li>MongoDB</li>
-                                    <li>Firebase</li>
-                                </ul>
-                                <!-- End of Databases -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Data Science -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Data <span>Science</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Pandas</li>
-                                    <li>DataFrames</li>
-                                    <li>Hadoop DFS</li>
-                                    <li>Hadoop MapReduce</li>
-                                    <li>Apache Spark</li>
-                                </ul>
-                                <!-- End of Data Science -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Frameworks -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Frameworks</h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Spring</li>
-                                    <li>Jersey</li>
-                                    <li>Nest.js</li>
-                                    <li>Teiid</li>
-                                    <li>Thrift</li>
-                                    <li>Hibernate</li>
-                                    <li>PySpark</li>
-                                </ul>
-                                <!-- End of Frameworks -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Build Tools -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Build <span>Tools</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Maven</li>
-                                    <li>Gradle</li>
-                                    <li>Webpack</li>
-                                </ul>
-                                <!-- End of Build Tools -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- APIs/Libraries/Middleware -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>APIs/Libraries/<span>Middleware</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Kong</li>
-                                    <li>Keycloak</li>
-                                    <li>GraphQL</li>
-                                    <li>Apollo</li>
-                                    <li>RabbitMQ</li>
-                                    <li>Auth0</li>
-                                    <li>HashiCorp Vault</li>
-                                    <li>Google Maps</li>
-                                </ul>
-                                <!-- End of APIs/Libraries/Middleware -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Deployment -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Deployment</h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Apache Tomcat</li>
-                                    <li>Glassfish</li>
-                                    <li>Wildfly</li>
-                                    <li>Heroku</li>
-                                    <li>AWS</li>
-                                    <li>Serverless</li>
-                                    <li>Google Cloud</li>
-                                </ul>
-                                <!-- End of Deployment -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Versioning/Issue Tracking -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Versioning/Issue <span>Tracking</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Git</li>
-                                    <li>Jira</li>
-                                    <li>TFS</li>
-                                    <li>Taiga</li>
-                                </ul>
-                                <!-- End of Versioning/Issue Tracking -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- DevOps -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>DevOps</h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Docker</li>
-                                    <li>Kubernetes</li>
-                                    <li>Jenkins</li>
-                                    <li>Bamboo</li>
-                                </ul>
-                                <!-- End of DevOps -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Web Development -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Web <span>Development</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Django</li>
-                                    <li>Angular</li>
-                                    <li>Node.js</li>
-                                    <li>React.js</li>
-                                    <li>HTML</li>
-                                    <li>CSS</li>
-                                    <li>MaterialUI</li>
-                                    <li>Bootstrap</li>
-                                </ul>
-                                <!-- End of Web Development -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- AWS -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>AWS</h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>EC2</li>
-                                    <li>Lambda</li>
-                                    <li>DynamoDB</li>
-                                    <li>SQS</li>
-                                    <li>SES</li>
-                                    <li>S3</li>
-                                    <li>ApiGateway</li>
-                                    <li>ElasticBeanStalk</li>
-                                </ul>
-                                <!-- End of AWS -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Geospatial Solutions -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Geospatial <span>Solutions</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>ArcGIS Pro</li>
-                                    <li>QGIS</li>
-                                    <li>PostGIS</li>
-                                    <li>ArcMap</li>
-                                    <li>JTS</li>
-                                    <li>GeoTools</li>
-                                </ul>
-                                <!-- End of Geospatial Solutions -->
-
-                                <div class="white-space-10"></div>
-
-                                <!-- Operating Systems/Devices -->
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="skill-title">
-                                            <h4>Operating Systems/<span>Devices</span></h4>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <ul class="knowledges">
-                                    <li>Windows</li>
-                                    <li>Linux (multiple flavors)</li>
-                                    <li>Raspberry Pi</li>
-                                    <li>Arduino</li>
-                                </ul>
-                                <!-- End of Operating Systems/Devices -->
-
-                                <!-- End of Skills -->
-
-                            </div>
-                        </div>
-
-                        <div class="white-space-30"></div>
-
-                        <!-- Research Publications -->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="block-title">
-                                    <h3>Research <span>Publications</span></h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Research Publication 1 -->
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="certificate-item clearfix">
-                                    <div class="certi-logo">
-                                        <img alt="iop" src="img/iop_logo.jpg">
-                                    </div>
-
-                                    <div class="certi-content">
-                                        <div class="certi-title">
-                                            <h4>Cloud vector mapping using MODIS 09 Climate Modeling Grid (CMG) for the
-                                                year 2010 and 2011<br></h4>
-                                                <p style="font-weight: normal">Asjad Asif Jah, Yousaf Bin Farrukh, Rao
-                                                    Muhammad Saeed Ali</p>
-                                            <p><b>Citation:</b> Asjad Asif Jah et al. 2013 IOP Conf. Ser.: Mater. Sci.
-                                                Eng. 51 012029</p>
-                                        </div>
-                                        <div class="certi-id">
-                                            <span>DOI: <a href="https://doi.org/10.1088/1757-899X/51/1/012029"
-                                                          target="_blank">doi.org/10.1088/1757-899X/51/1/012029</a></span><br>
-                                            <span>Abstract also available at The SAO/NASA Astrophysics Data System:</span>
-                                            <span><a
-                                                    href="https://ui.adsabs.harvard.edu/#abs/2013MS&E...51a2029J/abstract"
-                                                    target="_blank">https://ui.adsabs.harvard</a></span>
-                                        </div>
-                                        <div class="certi-date">
-                                            <span>2013</span>
-                                        </div>
-                                        <div class="certi-company">
-                                            <span>IOP Conference Series: Materials Science and Engineering</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End of Research Publication 1 -->
-
-                        </div>
-                        <!-- End of Research Publications -->
-
-                        <div class="white-space-30"></div>
-
-                        <!-- Certifications -->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="block-title">
-                                    <h3>Certifications</h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Certification 1 -->
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="certificate-item clearfix">
-                                    <div class="certi-logo">
-                                        <img alt="prudsol" src="img/prudsol_logo.png">
-                                    </div>
-
-                                    <div class="certi-content">
-                                        <div class="certi-title">
-                                            <h4>Agile Software Development Using SCRUM</h4>
-                                        </div>
-                                        <div class="certi-id">
-                                            <span>Cert# PRUDSOL-SCRUM-0610216</span>
-                                        </div>
-                                        <div class="certi-date">
-                                            <span>2016</span>
-                                        </div>
-                                        <div class="certi-company">
-                                            <span>Prudential Solutions</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End of Certification 1 -->
-
-                        </div>
-                        <!-- End of Certifications -->
-                    </div>
-                </section>
-                <!-- End of Resume Subpage -->
-
-                <!-- Portfolio Subpage -->
-                <section class="animated-section" data-id="portfolio" id="portfolio">
-                    <div class="section-content">
-                        <div class="page-title">
-                            <h2>Portfolio</h2>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <!-- Portfolio Content -->
-                                <div class="portfolio-content">
-
-                                    <ul class="portfolio-filters">
-                                        <li class="active">
-                                            <a class="filter btn btn-sm btn-link" data-group="category_all">All</a>
-                                        </li>
-                                        <li>
-                                            <a class="filter btn btn-sm btn-link" data-group="category_detailed">
-                                                Projects</a>
-                                        </li>
-                                        <li>
-                                            <a class="filter btn btn-sm btn-link" data-group="category_youtube-videos">
-                                                YouTube Videos</a>
-                                        </li>
-                                    </ul>
-
-                                    <!-- Portfolio Grid -->
-                                    <div class="portfolio-grid three-columns">
-
-                                        <figure class="item standard"
-                                                data-groups='["category_all", "category_detailed"]'>
-                                            <div class="portfolio-item-img">
-                                                <img alt="spatial ml" src="img/portfolio/spatial_ml.JPG"
-                                                     title="Spatial Machine Learning Workflow"/>
-                                                <a class="ajax-page-load"
-                                                   href="html_pages/portfolio_spatial_ml.html"></a>
-                                            </div>
-
-                                            <i class="far fa-file-alt"></i>
-                                            <h4 class="name">Spatial Machine Learning Workflow</h4>
-                                            <span class="category">Detailed</span>
-                                        </figure>
-
-                                        <figure class="item standard"
-                                                data-groups='["category_all", "category_detailed"]'>
-                                            <div class="portfolio-item-img">
-                                                <img alt="ckids" src="img/portfolio/ckids.jpg" title="ckids"/>
-                                                <a class="ajax-page-load" href="html_pages/portfolio_ckids.html"></a>
-                                            </div>
-
-                                            <i class="far fa-file-alt"></i>
-                                            <h4 class="name">Microtelcos and Digital Divide in CA</h4>
-                                            <span class="category">Detailed</span>
-                                        </figure>
-
-                                        <figure class="item standard"
-                                                data-groups='["category_all", "category_detailed"]'>
-                                            <div class="portfolio-item-img">
-                                                <img alt="satellite_tracker" src="img/portfolio/satellite_tracker.png"
-                                                     title="satellite_tracker"/>
-                                                <a class="ajax-page-load"
-                                                   href="html_pages/portfolio_satellite_tracker.html"></a>
-                                            </div>
-
-                                            <i class="far fa-file-alt"></i>
-                                            <h4 class="name">Satellite Tracker</h4>
-                                            <span class="category">Detailed</span>
-                                        </figure>
-
-                                        <figure class="item standard"
-                                                data-groups='["category_all", "category_detailed"]'>
-                                            <div class="portfolio-item-img">
-                                                <img alt="no_image" src="img/portfolio/no_image.png"
-                                                     title="Cellular"/>
-                                                <a class="ajax-page-load"
-                                                   href="html_pages/portfolio_cellular.html"></a>
-                                            </div>
-
-                                            <i class="far fa-file-alt"></i>
-                                            <h4 class="name">Cellular Network Signal Strength Mapping on Android</h4>
-                                            <span class="category">Detailed</span>
-                                        </figure>
-
-                                        <figure class="item standard"
-                                                data-groups='["category_all", "category_detailed"]'>
-                                            <div class="portfolio-item-img">
-                                                <img alt="solar" src="img/portfolio/solar.JPG"
-                                                     title="Cellular"/>
-                                                <a class="ajax-page-load"
-                                                   href="html_pages/portfolio_solar.html"></a>
-                                            </div>
-
-                                            <i class="far fa-file-alt"></i>
-                                            <h4 class="name">Mapping energy consumption through consumer participation
-                                                and solar budgeting</h4>
-                                            <span class="category">Detailed</span>
-                                        </figure>
-
-                                        <figure class="item lbvideo"
-                                                data-groups='["category_all", "category_youtube-videos"]'>
-                                            <div class="portfolio-item-img">
-                                                <img alt="GoogleMapsRoutingAddIn"
-                                                     src="img/portfolio/GoogleMapsRoutingAddIn.png" title=""/>
-                                                <a class="lightbox mfp-iframe"
-                                                   href="https://www.youtube.com/embed/_dSICx2NA6k"
-                                                   title="GoogleMapsRoutingAddIn - An AddIn for ArcGIS Pro"></a>
-                                            </div>
-
-                                            <i class="fas fa-video"></i>
-                                            <h4 class="name">GoogleMapsRoutingAddIn - An AddIn for ArcGIS Pro</h4>
-                                            <span class="category">YouTube Videos</span>
-                                        </figure>
-                                    </div>
-                                </div>
-                                <!-- End of Portfolio Content -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- End of Portfolio Subpage -->
-
-            </div>
-        </div>
-
+</header>
+
+<!-- ============================== MOBILE DRAWER ============================== -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+        <span class="brand"><span class="brand-mark">AAJ</span></span>
+        <button class="icon-btn" id="close-drawer" type="button" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+        </button>
     </div>
-</div>
+    <nav class="drawer-links" aria-label="Mobile">
+        <a class="nav-anim" href="#home" data-section="home">Home <span class="key">g h</span></a>
+        <a class="nav-anim" href="#about-me" data-section="about-me">About <span class="key">g a</span></a>
+        <a class="nav-anim" href="#resume" data-section="resume">Resume <span class="key">g r</span></a>
+        <a class="nav-anim" href="#portfolio" data-section="portfolio">Portfolio <span class="key">g p</span></a>
+    </nav>
+    <div class="drawer-section">
+        <button class="btn btn-secondary" id="drawer-open-palette" type="button">Open palette</button>
+        <button class="btn btn-secondary" id="drawer-theme-toggle" type="button">Toggle theme</button>
+        <a class="btn btn-primary" download
+           href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
+           onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Drawer Download CV' });">
+            Download CV ↓
+        </a>
+    </div>
+    <div class="drawer-section">
+        <div class="socials" role="list">
+            <a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank" rel="noopener" aria-label="LinkedIn"
+               onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'LinkedIn' });">
+               <i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+            <a href="https://github.com/Asjad27/" target="_blank" rel="noopener" aria-label="GitHub"
+               onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'GitHub' });">
+               <i class="fab fa-github" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/asjad.asif.27/" target="_blank" rel="noopener" aria-label="Facebook"
+               onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Facebook' });">
+               <i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="https://twitter.com/asjad_27" target="_blank" rel="noopener" aria-label="Twitter"
+               onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Twitter' });">
+               <i class="fab fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/asjad27/" target="_blank" rel="noopener" aria-label="Instagram"
+               onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Instagram' });">
+               <i class="fab fa-instagram" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</aside>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/modernizr.custom.js"></script>
-<script src="js/animating.js"></script>
+<main>
 
-<script src="js/imagesloaded.pkgd.min.js"></script>
+<!-- ============================== HOME / HERO ============================== -->
+<section class="section hero" id="home">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-text reveal">
+                <div class="status-pill" aria-label="Status">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span><span class="accent-text">available</span> · head_of_engineering @ aura</span>
+                </div>
+                <h1>Asjad Asif Jah</h1>
+                <p class="role-line" aria-live="polite">
+                    <span class="key">role:</span>
+                    <span class="val" id="role-rotator">head_of_engineering</span><span class="caret" aria-hidden="true">█</span>
+                </p>
+                <p class="eyebrow">based_in: <span class="accent-text">pakistan</span> · open_to: <span class="accent-text">advisory</span>, <span class="accent-text">scale-ups</span></p>
+                <div class="hero-ctas">
+                    <a class="btn btn-primary" download
+                       href="https://www.dropbox.com/s/catfo4h8k5vzytb/Asjad%20Asif%20Jah.pdf?dl=1"
+                       onclick="gtag('event', 'download_cv', { 'event_category': 'engagement', 'event_label': 'Hero Download CV' });">
+                        Download CV <span aria-hidden="true">↓</span>
+                    </a>
+                    <a class="btn btn-secondary" href="mailto:asjadjah@gmail.com">
+                        Get in touch <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+                <div class="socials" aria-label="Social profiles">
+                    <a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank" rel="noopener" aria-label="LinkedIn"
+                       onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'LinkedIn' });">
+                       <i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                    <a href="https://github.com/Asjad27/" target="_blank" rel="noopener" aria-label="GitHub"
+                       onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'GitHub' });">
+                       <i class="fab fa-github" aria-hidden="true"></i></a>
+                    <a href="https://www.facebook.com/asjad.asif.27/" target="_blank" rel="noopener" aria-label="Facebook"
+                       onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Facebook' });">
+                       <i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    <a href="https://twitter.com/asjad_27" target="_blank" rel="noopener" aria-label="Twitter"
+                       onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Twitter' });">
+                       <i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    <a href="https://www.instagram.com/asjad27/" target="_blank" rel="noopener" aria-label="Instagram"
+                       onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Instagram' });">
+                       <i class="fab fa-instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="hero-photo reveal" aria-hidden="false">
+                <img alt="Asjad Asif Jah" src="img/main_photo.jpg" loading="eager">
+            </div>
+        </div>
+    </div>
+</section>
 
-<script src='js/perfect-scrollbar.min.js'></script>
-<script src='js/jquery.shuffle.min.js'></script>
-<script src='js/masonry.pkgd.min.js'></script>
-<script src='js/owl.carousel.min.js'></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
+<!-- ============================== ABOUT ============================== -->
+<section class="section" id="about-me">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="num">01 ──</span>
+            <h2>About</h2>
+            <span class="rule"></span>
+        </div>
 
-<script src="js/validator.js"></script>
+        <div class="about-grid">
+            <div class="prose reveal">
+                <p>My story began when I completed my undergraduate degree at the National University of
+                    Sciences and Technology (NUST) Islamabad in 2016. In 2020, I received the Fulbright
+                    Scholarship for my Master's in Spatial Data Science at the University of Southern
+                    California. During my graduate degree, I focused on integrating Spatial Data with
+                    Machine Learning and Artificial Intelligence to solve geospatial problems.</p>
+
+                <p>After graduating in 2016, I started working as a back-end software engineer for the
+                    first couple of years of my career, then gradually moved towards fullstack software
+                    engineering roles. During my career, I have architected and built scalable software
+                    systems from scratch, writing front-end and back-end code, leading a team of
+                    developers, performing DevOps, and ensuring customer satisfaction. I paused my
+                    career in 2020 at the level of Senior Software Engineer after receiving the
+                    Fulbright Scholarship.</p>
+
+                <p>After completing my graduate degree in May 2022, I returned to Pakistan and joined
+                    Airlift Technologies as an Associate Engineering Manager. Since Airlift Technologies
+                    shut down operations in July, I joined another product start-up in August called
+                    Byte as an Engineering Manager. Byte was also not spared from the financial hit that
+                    a lot of companies have been taking in the recent past. In 2024, I joined a UAE-based
+                    startup, Aura, working in the FinTech space, where I now lead engineering. I love
+                    building at product start-ups, and I'm excited about what's next.</p>
+
+                <p>I read business and tech-related books. I am an avid PC gamer, and my favorite genre
+                    is FPS. I also like watching sci-fi, horror, and thriller movies and series.</p>
+            </div>
+
+            <aside class="reveal">
+                <div class="whoami">
+                    <div class="whoami-row">
+                        <span class="k">location</span>
+                        <span class="v">Pakistan</span>
+                    </div>
+                    <div class="whoami-row">
+                        <span class="k">birthday</span>
+                        <span class="v">February 27</span>
+                    </div>
+                    <div class="whoami-row">
+                        <span class="k">email</span>
+                        <span class="v"><a href="mailto:asjadjah@gmail.com">asjadjah@gmail.com</a></span>
+                    </div>
+                    <div class="whoami-row">
+                        <span class="k">phone</span>
+                        <span class="v"><a href="tel:+923425074909">+92 342 507 4909</a></span>
+                    </div>
+                </div>
+
+                <div class="sidebar-block">
+                    <div class="block-title">Summary</div>
+                    <p>A fullstack senior software engineer with experience working at both
+                        start-ups and enterprises, possessing technical leadership experience and
+                        additional skill set in spatial application development. Proven expertise in
+                        multiple frameworks for developing state-of-the-art software and exceptional
+                        analytical and problem-solving capabilities. A team player and an
+                        enthusiastic individual with an initiative-driven approach to work in
+                        particular and life in general.</p>
+                </div>
+
+                <div class="sidebar-block">
+                    <div class="block-title">Interesting Fact</div>
+                    <p>As a kid, I collected coins of various denominations belonging to different
+                        countries. My coin book had coins of various denominations from over 30
+                        countries, including those from pre-partition India. I used to restore the
+                        coins as much as possible before safely storing them in my coin book.</p>
+                </div>
+            </aside>
+        </div>
+
+        <div class="divider divider--lg"></div>
+
+        <!-- ---- What I Do ---- -->
+        <div class="block-title reveal" id="what-i-do">What I Do</div>
+
+        <div class="cards">
+            <article class="card reveal">
+                <div class="card-icon"><i class="lnr lnr-laptop-phone" aria-hidden="true"></i></div>
+                <h4>Fullstack Development</h4>
+                <div class="stack-line">stack: react · angular · node · java · python · flutter</div>
+                <p>During the course of my career, I have architected and built scalable
+                    software systems from scratch, writing front-end and back-end code
+                    and deploying them to cloud providers. I have curated applications
+                    that work on various platforms, including but not limited to Windows
+                    Desktop, Windows/Linux Server, Raspberry Pi, and Android. I have
+                    experience working in React and Angular for web development and
+                    Flutter for cross-platform development. I have built back-end
+                    systems in Java, Node.js, C++, and Python.</p>
+            </article>
+
+            <article class="card reveal">
+                <div class="card-icon"><i class="lnr lnr-database" aria-hidden="true"></i></div>
+                <h4>Data Science</h4>
+                <div class="stack-line">stack: spark · hadoop · pandas · sklearn · geoai</div>
+                <p>I got the chance to dive deep into data science workflows and
+                    pipelines during my graduate degree at USC. I worked on MapReduce,
+                    Locality Sensitive Hashing, Recommendation Systems, Analyzing
+                    Massive Graphs, Mining Data Streams, Linear/Logistic Regression,
+                    Classification/Clustering, Bayesian Theory,
+                    Parametric/Non-Parametric Models, Neural Networks, Random Forests,
+                    Generative Models, HDFS, Apache Spark, GeoAI, Spatial Data
+                    Wrangling, Exploratory Spatial Data Analysis, Spatially Explicit
+                    Supervised/Unsupervised Learning, Spatially Explicit Neural
+                    Networks, Spatial Optimization, and Prescriptive Spatial Machine
+                    Learning to name a few.</p>
+            </article>
+
+            <article class="card reveal">
+                <div class="card-icon"><i class="lnr lnr-earth" aria-hidden="true"></i></div>
+                <h4>Spatial Application Development</h4>
+                <div class="stack-line">stack: arcgis · qgis · postgis · jts · geotools</div>
+                <p>Since I was young, I have been passionate about spatial data, how a
+                    computer can represent the real world, and its applications. I
+                    remember how excited I was when Google Earth got released in the
+                    early 2000s. I used to be fascinated playing around with it. I also
+                    remember playing Flight Simulator X when it was released, being
+                    interested in seeing how the real world is modeled inside the game.
+                    My passion has continued till today, and I am always very interested
+                    in solving problems that require spatial data manipulation and
+                    thinking about solving problems with a spatial context. The choice
+                    of my graduate degree was also heavily influenced by this passion.
+                    During my career, I have built a number of spatial applications,
+                    including but not limited to; a Python server application to
+                    generate secure, encoded, and small-sized vector map tiles,
+                    implementation of a graph-based routing algorithm in Java,
+                    development of multiple data QA Java applications to detect GIS data
+                    anomalies, automated language translation of map data, development
+                    of a mechanism to convert satellite images to raster map tiles for
+                    loading them offline inside an android application, and
+                    implementation of new features in a native C++ library for map
+                    rendering on Android/iOS. I have worked on various libraries and
+                    frameworks for spatial data manipulation and handling that run on
+                    different platforms; Web, Desktop, and Mobile.</p>
+            </article>
+
+            <article class="card reveal">
+                <div class="card-icon"><i class="lnr lnr-smartphone" aria-hidden="true"></i></div>
+                <h4>Mobile Development</h4>
+                <div class="stack-line">stack: android · flutter · dart</div>
+                <p>Earlier on, I worked on native Android application development. I
+                    built a number of Android applications during the final year of my
+                    undergraduate degree as well as in the first couple of years of my
+                    career. During my graduate degree at USC, I took a course on Web
+                    Technologies that used Flutter as the primary framework. I enjoyed
+                    working in Dart and building cross-platform applications in Flutter.
+                    Although I haven't got a chance to work on Flutter in a professional
+                    environment, I am keen to take this opportunity when it arrives.</p>
+            </article>
+
+            <article class="card reveal">
+                <div class="card-icon"><i class="lnr lnr-cloud-sync" aria-hidden="true"></i></div>
+                <h4>Cloud Deployment</h4>
+                <div class="stack-line">stack: aws · docker · kubernetes · serverless</div>
+                <p>I have deployed applications to bare metal servers when containers
+                    were not widely used and understood. I got into containerization
+                    when I learned about Docker. I used it a lot as I realized how cool
+                    this technology is and gave a company-wide 2-hour overview of
+                    Docker, so I could explain how useful it is and should be widely
+                    adopted. The first platform I got my hands on for cloud deployment
+                    was AWS, which was a game changer for me. Moving from bare metal to
+                    containerization to the cloud has been quite a journey, and it has
+                    been a fascinating one for me. I have considerable experience using
+                    many AWS services, e.g., EC2, ECS, ECR, Lambda, DynamoDB, SQS, SES, 
+                    S3, ApiGateway, and ElasticBeanStalk, to name a few.</p>
+            </article>
+
+            <article class="card reveal">
+                <div class="card-icon"><i class="lnr lnr-flag" aria-hidden="true"></i></div>
+                <h4>People Management</h4>
+                <div class="stack-line">focus: hiring · 1:1s · career growth · org design</div>
+                <p>I got a chance to lead a small team of developers at Afiniti, which I
+                    enjoyed, and I learned I have a good sense of people management. I
+                    joined Airlift in a people management role, and it was a fantastic
+                    experience while it lasted. Later, I joined Byte as an Engineering
+                    Manager, again involving technical and people management
+                    responsibilities, and I enjoyed every part of it. Now I'm heading
+                    engineering at Aura which also heavily involves people management
+                    responsibilities.</p>
+            </article>
+        </div>
+
+        <div class="divider divider--lg"></div>
+
+        <!-- ---- Career Overview ---- -->
+        <div class="block-title reveal" id="career-overview">Career Overview</div>
+
+        <div class="stats">
+            <div class="stat reveal">
+                <div class="stat-icon"><i class="lnr lnr-hourglass" aria-hidden="true"></i></div>
+                <div class="stat-num"><script>document.write((new Date().getFullYear()-2016).toString());</script></div>
+                <div class="stat-label">YEARS_EXP</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-icon"><i class="lnr lnr-apartment" aria-hidden="true"></i></div>
+                <div class="stat-num">6</div>
+                <div class="stat-label">ORGS</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-icon"><i class="lnr lnr-graduation-hat" aria-hidden="true"></i></div>
+                <div class="stat-num">2</div>
+                <div class="stat-label">UNIS</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-icon"><i class="lnr lnr-pencil" aria-hidden="true"></i></div>
+                <div class="stat-num">1</div>
+                <div class="stat-label">PUBS</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat-icon"><i class="lnr lnr-checkmark-circle" aria-hidden="true"></i></div>
+                <div class="stat-num">1</div>
+                <div class="stat-label">CERTS</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================== RESUME ============================== -->
+<section class="section" id="resume">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="num">02 ──</span>
+            <h2>Resume</h2>
+            <span class="rule"></span>
+        </div>
+
+        <div class="resume-grid">
+            <div>
+                <div class="block-title">Experience</div>
+
+                <div class="timeline">
+                    <!-- Aura -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2024 — present</span>
+                            <span class="sep">·</span>
+                            <span>head_of_engineering @ aura</span>
+                            <span class="sep">·</span>
+                            <span class="loc">dubai, ae</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="aura logo" src="img/aura_finance_me_logo.jpeg">
+                            <span class="org-name">Aura</span>
+                        </div>
+                        <h4 class="tl-role">Head of Engineering</h4>
+                        <p class="tl-promo mono">↑ from technical_lead</p>
+                        <div class="tl-body">
+                            <p>Started working as a technical lead and now heading engineering to build
+                                Aura from ground-up, architecting the core product using NestJS + React
+                                + AWS. Major responsibilities include:</p>
+                            <p><span class="bullet">▸</span> Building and scaling the engineering team
+                                and infrastructure for the core product which is now generating $200,000+
+                                in ARR and growing continuously</p>
+                            <p><span class="bullet">▸</span> Leading the engineering team; actively
+                                conducting code reviews to maintain quality of the product and conducting
+                                regular 1:1s to ensure career growth and progression</p>
+                            <p><span class="bullet">▸</span> Setting up the complete infrastructure of
+                                the product; built pipelines for automated testing and deployment</p>
+                            <p><span class="bullet">▸</span> Setting up the core engineering processes
+                                and principles from scratch and continuously looking for ways to improve
+                                them; vetting all technical solutions and ensuring there's neither
+                                overengineering nor under-engineering and deep diving before taking
+                                technology decisions</p>
+                        </div>
+                    </article>
+
+                    <!-- Byte -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2022 — 2024</span>
+                            <span class="sep">·</span>
+                            <span>engineering_manager @ byte</span>
+                            <span class="sep">·</span>
+                            <span class="loc">islamabad, pk</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="byte logo" src="img/byte_logo.jfif">
+                            <span class="org-name">Byte (YC S20)</span>
+                        </div>
+                        <h4 class="tl-role">Engineering Manager</h4>
+                        <div class="tl-body">
+                            <p>Worked as an engineering manager in the Engineering team to
+                                deliver both internally and externally used web and mobile products.
+                                Also filled in as the fullstack team lead actively involved in
+                                designing and developing critical features and applications using
+                                Angular + Node.js. Led a team of 10 engineers (Fullstack + Mobile +
+                                DevOps + QA) ensuring high-quality design, development, and deployment
+                                of new business functionalities through active code review and feedback.
+                                Also ensured the career growth of the engineers by actively working to
+                                improve the skills of the engineering talent.</p>
+                        </div>
+                    </article>
+
+                    <!-- Airlift -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2022 — 2022</span>
+                            <span class="sep">·</span>
+                            <span>associate_eng_manager @ airlift</span>
+                            <span class="sep">·</span>
+                            <span class="loc">islamabad, pk</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="airlift logo" src="img/airlift_logo.jfif">
+                            <span class="org-name">Airlift Technologies</span>
+                        </div>
+                        <h4 class="tl-role">Associate Engineering Manager</h4>
+                        <div class="tl-body">
+                            <p>Worked as an associate engineering manager in the Warehouse Operations
+                                team to deliver web and mobile products used in the Airlift warehouses.
+                                Worked as a fullstack developer with hands-on development on Angular +
+                                Node.js. Managed a team of 6 engineers (Fullstack + Android + Automated
+                                QA)</p>
+                        </div>
+                    </article>
+
+                    <!-- Fulbright -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2020 — 2022</span>
+                            <span class="sep">·</span>
+                            <span>fulbright_scholar @ usc</span>
+                            <span class="sep">·</span>
+                            <span class="loc">los angeles, ca</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="fulbright logo" src="img/fulbright_logo.jfif">
+                            <span class="org-name">The Fulbright Program</span>
+                        </div>
+                        <h4 class="tl-role">Fulbright Scholar</h4>
+                        <div class="tl-body">
+                            <p>The Fulbright Scholarship award is a competitive program that selects
+                                academically and professionally high-achieving individuals for a
+                                fully-funded Master's program in the United States. The individuals
+                                selected have a track record of accomplishment and are highly motivated
+                                in their future goals and aspirations.</p>
+                        </div>
+                    </article>
+
+                    <!-- Afiniti -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2019 — 2020</span>
+                            <span class="sep">·</span>
+                            <span>senior_software_engineer @ afiniti</span>
+                            <span class="sep">·</span>
+                            <span class="loc">islamabad, pk</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="afiniti logo" src="img/afiniti_logo.jfif">
+                            <span class="org-name">Afiniti</span>
+                        </div>
+                        <h4 class="tl-role">Senior Software Engineer</h4>
+                        <p class="tl-promo mono">↑ from software_engineer</p>
+                        <div class="tl-body">
+                            <p>Worked as a fullstack software engineer in the Engineering team on the
+                                following projects:</p>
+                            <p><span class="bullet">▸</span> <b>Afiniti Core - Configuration Server</b><br>
+                                Role: Project Lead and Backend Developer (Node.js + C++)
+                                Managed a team of 4 engineers (Node.js + React.js + C++)</p>
+                            <p><span class="bullet">▸</span> <b>Config Server – Transformation App</b><br>
+                                Role: Project Lead and Backend Developer (Python)</p>
+                            <p><span class="bullet">▸</span> <b>Afiniti MegaACD</b><br>
+                                Role: Fullstack Developer (Node.js + GraphQL + React.js)</p>
+                            <p><span class="bullet">▸</span> <b>Afiniti IME/AiRo</b><br>
+                                Role: Backend Developer (Node.js + GraphQL)</p>
+                            <p><span class="bullet">▸</span> <b>Afiniti Core - Lookup Service</b><br>
+                                Role: Backend Developer (C++)</p>
+                        </div>
+                    </article>
+
+                    <!-- LMKR -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2017 — 2019</span>
+                            <span class="sep">·</span>
+                            <span>application_engineer @ lmkr</span>
+                            <span class="sep">·</span>
+                            <span class="loc">islamabad, pk</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="lmkr logo" src="img/lmkr_logo.jfif">
+                            <span class="org-name">LMKR</span>
+                        </div>
+                        <h4 class="tl-role">Application Engineer</h4>
+                        <div class="tl-body">
+                            <p>Worked as a Java software engineer for Halliburton on developing data
+                                integration, federation, and interoperability between multiple Oil &amp; Gas
+                                Exploration &amp; Production software. Key responsibilities included the
+                                development of Teiid connectors and translators to expose data using
+                                data virtualization, patching various modules of the application for
+                                smooth flow of data to/from multiple connectors, extending Apache Thrift
+                                server and client implementation in Java, C#, and C++ for various
+                                connectors, moving Teiid connectors to Docker, development of unit and
+                                integration tests for multiple connectors, and automation of tests after
+                                integration with Docker.</p>
+                        </div>
+                    </article>
+
+                    <!-- TPL -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2016 — 2017</span>
+                            <span class="sep">·</span>
+                            <span>gis_developer @ tpl_maps</span>
+                            <span class="sep">·</span>
+                            <span class="loc">islamabad, pk</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="tpl logo" src="img/tpl_logo.jfif">
+                            <span class="org-name">TPL Maps</span>
+                        </div>
+                        <h4 class="tl-role">GIS Developer</h4>
+                        <div class="tl-body">
+                            <p>Worked on a wide array of projects using Java, Python, and C++ and
+                                implemented them on multiple platforms, including Desktop, Server, Web,
+                                and Android. A few significant highlights include the development of a
+                                Python server application to generate secure, encoded, and small-sized
+                                vector map tiles, implementation of a graph-based routing algorithm in
+                                Java, development of multiple data QA Java applications to detect GIS
+                                data anomalies, automated language translation of map data, development
+                                of a mechanism to convert satellite images to raster map tiles for
+                                loading them offline inside an android application, and addition of new
+                                features in the native C++ library for map rendering.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="block-title">Education</div>
+
+                <div class="timeline">
+                    <!-- USC -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2020 — 2022</span>
+                            <span class="sep">·</span>
+                            <span>m.s. spatial_data_science @ usc</span>
+                            <span class="sep">·</span>
+                            <span class="loc">los angeles, ca</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="usc logo" src="img/usc_logo.jfif">
+                            <span class="org-name">University of Southern California</span>
+                        </div>
+                        <h4 class="tl-role">Master of Science (M.S.) — Spatial Data Science</h4>
+                        <div class="tl-meta">
+                            <span class="tag">CGPA: 4.00/4.00</span>
+                            <span class="tag tag--award">Fulbright Scholarship</span>
+                        </div>
+                        <div class="tl-body" style="margin-top: 1rem;">
+                            <details class="course">
+                                <summary><span class="code">DSCI-553</span> Foundations and Applications of Data Mining <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p>MapReduce, Frequent Itemsets, Shingling, Minhashing, Locality
+                                        Sensitive Hashing, Recommendation Systems, Analyzing Massive Graphs,
+                                        Mining Data Streams, Link Analysis, Web Advertising</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">DSCI-552</span> Machine Learning for Data Science <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p>Linear/Logistic Regression, Bayesian Theory, Classification/
+                                        Clustering, Parametric/Non-Parametric Models, Supervised/
+                                        Unsupervised Learning, Neural Networks, NLP, Random Forests,
+                                        Generative Models</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">DSCI-551</span> Foundations of Data Management <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p><b>Project:</b> <a href="https://youtu.be/5trjJ1A569s" target="_blank" rel="noopener">Satellite Tracker</a>
+                                        <br>Storage &amp; File Systems, Hadoop Distributed File System (HDFS),
+                                        Data Modeling (ER &amp; Relational), Indexing (B+-Tree), Query
+                                        Execution, Python Pandas, Apache Spark, Hadoop MapReduce</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">CSCI-571</span> Web Technologies <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p>HTML, CSS, Javascript, JSON, Dart, Rust, WebAssembly, DOM, HTTP(S),
+                                        Responsive Web Design, Node, Angular, React, Flutter, Android/iOS,
+                                        Serverless, Web3</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">SSCI-575</span> Spatial Data Science <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p><b>Project:</b> <a href="https://storymaps.arcgis.com/stories/0a82cd8897e446ac9115579ef5cdc694" target="_blank" rel="noopener">Spatial Machine Learning Workflow</a>
+                                        <br>GeoAI, Spatial Data Representation/Wrangling, Exploratory
+                                        Spatial Data Analysis, Spatially Explicit Supervised/Unsupervised Learning,
+                                        Spatially Explicit Neural Networks, Spatial Optimization,
+                                        Prescriptive Spatial Machine Learning</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">SSCI-582</span> Spatial Databases <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p>Database Architecture, Data Modeling, SQL, ESRI Databases, Spatial
+                                        Querying, Spatial Indexing, Object-Oriented Databases, NoSQL
+                                        Databases, Time-Enabled Spatial Databases, Spatial Big Data,
+                                        Geospatial Infrastructure</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">SSCI-586</span> GIS Programming and Customization <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p>Python for Vector/Raster Data Manipulation, Python in ArcGIS,
+                                        Interactive Computational Geospatial Programming, Notebooks for Web
+                                        GIS, Real-Time Spatial Data Processing, Spatial Data in an IoT
+                                        Era</p>
+                                </div>
+                            </details>
+                            <details class="course">
+                                <summary><span class="code">SSCI-581</span> Concepts for Spatial Thinking <span class="chev" aria-hidden="true">›</span></summary>
+                                <div class="course-body">
+                                    <p>Spatial Autocorrelation, Spatial Heterogeneity, Raster and Terrain
+                                        Analysis, Spatial Estimation &amp; Interpolation, Spatial Modeling,
+                                        Modeling with Machine Learning, Geospatial Intelligence</p>
+                                </div>
+                            </details>
+                        </div>
+                    </article>
+
+                    <!-- NUST -->
+                    <article class="tl-item reveal">
+                        <div class="tl-header">
+                            <span class="period">2012 — 2016</span>
+                            <span class="sep">·</span>
+                            <span>b.e. @ nust</span>
+                            <span class="sep">·</span>
+                            <span class="loc">islamabad, pk</span>
+                        </div>
+                        <div class="tl-org">
+                            <img alt="nust logo" src="img/nust_logo.jfif">
+                            <span class="org-name">National University of Sciences &amp; Technology (NUST)</span>
+                        </div>
+                        <h4 class="tl-role">Bachelor of Engineering (B.E.)</h4>
+                        <div class="tl-meta">
+                            <span class="tag">CGPA: 3.71/4.00</span>
+                            <span class="tag">PEC Registered Engineer</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <aside>
+                <div class="block-title">Skills</div>
+
+                <div class="skill-group">
+                    <h4>Programming Languages</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Java</span></li>
+                        <li><span class="chip">C</span></li>
+                        <li><span class="chip">C++</span></li>
+                        <li><span class="chip">Python</span></li>
+                        <li><span class="chip">Scala</span></li>
+                        <li><span class="chip">TypeScript</span></li>
+                        <li><span class="chip">JavaScript</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Databases</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">PostgreSQL</span></li>
+                        <li><span class="chip">MySQL</span></li>
+                        <li><span class="chip">Oracle</span></li>
+                        <li><span class="chip">SQL Server</span></li>
+                        <li><span class="chip">MongoDB</span></li>
+                        <li><span class="chip">Firebase</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Data Science</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Pandas</span></li>
+                        <li><span class="chip">DataFrames</span></li>
+                        <li><span class="chip">Hadoop DFS</span></li>
+                        <li><span class="chip">Hadoop MapReduce</span></li>
+                        <li><span class="chip">Apache Spark</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Frameworks</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Spring</span></li>
+                        <li><span class="chip">Jersey</span></li>
+                        <li><span class="chip">Nest.js</span></li>
+                        <li><span class="chip">Teiid</span></li>
+                        <li><span class="chip">Thrift</span></li>
+                        <li><span class="chip">Hibernate</span></li>
+                        <li><span class="chip">PySpark</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Build Tools</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Maven</span></li>
+                        <li><span class="chip">Gradle</span></li>
+                        <li><span class="chip">Webpack</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>APIs/Libraries/Middleware</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Kong</span></li>
+                        <li><span class="chip">Keycloak</span></li>
+                        <li><span class="chip">GraphQL</span></li>
+                        <li><span class="chip">Apollo</span></li>
+                        <li><span class="chip">RabbitMQ</span></li>
+                        <li><span class="chip">Auth0</span></li>
+                        <li><span class="chip">HashiCorp Vault</span></li>
+                        <li><span class="chip">Google Maps</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Deployment</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Apache Tomcat</span></li>
+                        <li><span class="chip">Glassfish</span></li>
+                        <li><span class="chip">Wildfly</span></li>
+                        <li><span class="chip">Heroku</span></li>
+                        <li><span class="chip">AWS</span></li>
+                        <li><span class="chip">Serverless</span></li>
+                        <li><span class="chip">Google Cloud</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Versioning / Issue Tracking</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Git</span></li>
+                        <li><span class="chip">Jira</span></li>
+                        <li><span class="chip">TFS</span></li>
+                        <li><span class="chip">Taiga</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>DevOps</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Docker</span></li>
+                        <li><span class="chip">Kubernetes</span></li>
+                        <li><span class="chip">Jenkins</span></li>
+                        <li><span class="chip">Bamboo</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Web Development</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Django</span></li>
+                        <li><span class="chip">Angular</span></li>
+                        <li><span class="chip">Node.js</span></li>
+                        <li><span class="chip">React.js</span></li>
+                        <li><span class="chip">HTML</span></li>
+                        <li><span class="chip">CSS</span></li>
+                        <li><span class="chip">MaterialUI</span></li>
+                        <li><span class="chip">Bootstrap</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>AWS</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">EC2</span></li>
+                        <li><span class="chip">ECS</span></li>
+                        <li><span class="chip">ECR</span></li>
+                        <li><span class="chip">Lambda</span></li>
+                        <li><span class="chip">Codebuild</span></li>
+                        <li><span class="chip">DynamoDB</span></li>
+                        <li><span class="chip">SQS</span></li>
+                        <li><span class="chip">SES</span></li>
+                        <li><span class="chip">RDS</span></li>
+                        <li><span class="chip">S3</span></li>
+                        <li><span class="chip">ApiGateway</span></li>
+                        <li><span class="chip">CloudWatch</span></li>
+                        <li><span class="chip">CloudFront</span></li>
+                        <li><span class="chip">ElasticBeanStalk</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Geospatial Solutions</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">ArcGIS Pro</span></li>
+                        <li><span class="chip">QGIS</span></li>
+                        <li><span class="chip">PostGIS</span></li>
+                        <li><span class="chip">ArcMap</span></li>
+                        <li><span class="chip">JTS</span></li>
+                        <li><span class="chip">GeoTools</span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Operating Systems / Devices</h4>
+                    <ul class="chips reset-list">
+                        <li><span class="chip">Windows</span></li>
+                        <li><span class="chip">Linux (multiple flavors)</span></li>
+                        <li><span class="chip">Raspberry Pi</span></li>
+                        <li><span class="chip">Arduino</span></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
+        <div class="divider divider--lg"></div>
+
+        <!-- ---- Research Publications ---- -->
+        <div class="block-title reveal" id="publications">Research Publications</div>
+
+        <article class="pub-card reveal">
+            <div class="pub-header">
+                <span class="accent-text">pub/2013/iop</span>
+                <span class="sep" style="color: var(--muted-2); padding-inline: 0.4rem;">·</span>
+                <span>doi:10.1088/1757-899X/51/1/012029</span>
+            </div>
+            <div class="tl-org">
+                <img alt="IOP Publishing" src="img/iop_logo.jpg" width="28" height="28" loading="lazy">
+                <span class="org-name">IOP Publishing</span>
+            </div>
+            <h4>Cloud vector mapping using MODIS 09 Climate Modeling Grid (CMG) for the year 2010 and 2011</h4>
+            <p class="authors">Asjad Asif Jah, Yousaf Bin Farrukh, Rao Muhammad Saeed Ali</p>
+            <p class="citation"><b>Citation:</b> Asjad Asif Jah et al. 2013 IOP Conf. Ser.: Mater. Sci. Eng. 51 012029</p>
+            <p class="citation muted">2013 · IOP Conference Series: Materials Science and Engineering</p>
+            <div class="links">
+                <span>DOI: <a href="https://doi.org/10.1088/1757-899X/51/1/012029" target="_blank" rel="noopener">doi.org/10.1088/1757-899X/51/1/012029</a></span>
+                <span>SAO/NASA ADS: <a href="https://ui.adsabs.harvard.edu/#abs/2013MS&E...51a2029J/abstract" target="_blank" rel="noopener">ui.adsabs.harvard</a></span>
+            </div>
+        </article>
+
+        <div class="divider divider--lg"></div>
+
+        <!-- ---- Certifications ---- -->
+        <div class="block-title reveal" id="certifications">Certifications</div>
+
+        <div class="cert-grid">
+            <article class="cert-card reveal">
+                <div class="cert-header">
+                    <span class="accent-text">cert/2016/prudsol</span>
+                </div>
+                <div class="tl-org">
+                    <img alt="Prudential Solutions" src="img/prudsol_logo.png" width="28" height="28" loading="lazy">
+                    <span class="org-name">Prudential Solutions</span>
+                </div>
+                <h4>Agile Software Development Using SCRUM</h4>
+                <div class="cert-meta">issued: 2016 / id: PRUDSOL-SCRUM-0610216</div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ============================== PORTFOLIO ============================== -->
+<section class="section" id="portfolio">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="num">03 ──</span>
+            <h2>Portfolio</h2>
+            <span class="rule"></span>
+        </div>
+
+        <div class="filters reveal" role="tablist" aria-label="Portfolio filters">
+            <button class="filter-pill is-active" data-filter="all" role="tab" aria-selected="true">[ all ] <span class="count">6</span></button>
+            <button class="filter-pill" data-filter="projects" role="tab" aria-selected="false">[ projects ] <span class="count">5</span></button>
+            <button class="filter-pill" data-filter="youtube" role="tab" aria-selected="false">[ youtube ] <span class="count">1</span></button>
+        </div>
+
+        <div class="portfolio-grid">
+            <a class="project-card reveal" href="html_pages/portfolio_spatial_ml.html" data-cat="projects"
+               onclick="gtag('event', 'portfolio_click', { 'event_category': 'portfolio', 'event_label': 'Spatial Machine Learning Workflow' });">
+                <div class="project-thumb">
+                    <img alt="spatial ml" src="img/portfolio/spatial_ml.JPG" loading="lazy">
+                    <span class="type-chip">project</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-file mono">portfolio/spatial_ml.md</div>
+                    <h3 class="project-title">Spatial Machine Learning Workflow</h3>
+                </div>
+            </a>
+
+            <a class="project-card reveal" href="html_pages/portfolio_ckids.html" data-cat="projects"
+               onclick="gtag('event', 'portfolio_click', { 'event_category': 'portfolio', 'event_label': 'Microtelcos and Digital Divide in CA' });">
+                <div class="project-thumb">
+                    <img alt="ckids" src="img/portfolio/ckids.jpg" loading="lazy">
+                    <span class="type-chip">project</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-file mono">portfolio/ckids_microtelcos.md</div>
+                    <h3 class="project-title">Microtelcos and Digital Divide in CA</h3>
+                </div>
+            </a>
+
+            <a class="project-card reveal" href="html_pages/portfolio_satellite_tracker.html" data-cat="projects"
+               onclick="gtag('event', 'portfolio_click', { 'event_category': 'portfolio', 'event_label': 'Satellite Tracker' });">
+                <div class="project-thumb">
+                    <img alt="satellite_tracker" src="img/portfolio/satellite_tracker.png" loading="lazy">
+                    <span class="type-chip">project</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-file mono">portfolio/satellite_tracker.md</div>
+                    <h3 class="project-title">Satellite Tracker</h3>
+                </div>
+            </a>
+
+            <a class="project-card reveal" href="html_pages/portfolio_cellular.html" data-cat="projects"
+               onclick="gtag('event', 'portfolio_click', { 'event_category': 'portfolio', 'event_label': 'Cellular Network Signal Strength Mapping on Android' });">
+                <div class="project-thumb">
+                    <img alt="no_image" src="img/portfolio/no_image.png" loading="lazy">
+                    <span class="type-chip">project</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-file mono">portfolio/cellular_signal.md</div>
+                    <h3 class="project-title">Cellular Network Signal Strength Mapping on Android</h3>
+                </div>
+            </a>
+
+            <a class="project-card reveal" href="html_pages/portfolio_solar.html" data-cat="projects"
+               onclick="gtag('event', 'portfolio_click', { 'event_category': 'portfolio', 'event_label': 'Mapping energy consumption through consumer participation and solar budgeting' });">
+                <div class="project-thumb">
+                    <img alt="solar" src="img/portfolio/solar.JPG" loading="lazy">
+                    <span class="type-chip">project</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-file mono">portfolio/solar_budgeting.md</div>
+                    <h3 class="project-title">Mapping energy consumption through consumer participation and solar budgeting</h3>
+                </div>
+            </a>
+
+            <button class="project-card reveal" type="button" data-cat="youtube"
+                    data-yt="https://www.youtube.com/embed/_dSICx2NA6k"
+                    data-yt-title="GoogleMapsRoutingAddIn — An AddIn for ArcGIS Pro">
+                <div class="project-thumb">
+                    <img alt="GoogleMapsRoutingAddIn" src="img/portfolio/GoogleMapsRoutingAddIn.png" loading="lazy">
+                    <span class="type-chip">youtube</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-file mono">portfolio/gmaps_routing_addin.yt</div>
+                    <h3 class="project-title">GoogleMapsRoutingAddIn — An AddIn for ArcGIS Pro</h3>
+                </div>
+            </button>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <div class="footer-sig mono">
+            <span class="accent-text">//</span> © 2022–2026 asjadjah · built with html + css + vanilla js · last_deployed: <span id="footer-deploy">2026-05-12</span>
+        </div>
+        <div class="footer-tools">
+            <div class="socials" aria-label="Social profiles">
+                <a href="https://www.linkedin.com/in/asjad-asif-jah/" target="_blank" rel="noopener" aria-label="LinkedIn"
+                   onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'LinkedIn' });">
+                   <i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                <a href="https://github.com/Asjad27/" target="_blank" rel="noopener" aria-label="GitHub"
+                   onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'GitHub' });">
+                   <i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/asjad.asif.27/" target="_blank" rel="noopener" aria-label="Facebook"
+                   onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Facebook' });">
+                   <i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="https://twitter.com/asjad_27" target="_blank" rel="noopener" aria-label="Twitter"
+                   onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Twitter' });">
+                   <i class="fab fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/asjad27/" target="_blank" rel="noopener" aria-label="Instagram"
+                   onclick="gtag('event', 'click', { 'event_category': 'social', 'event_label': 'Instagram' });">
+                   <i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <button class="icon-btn" id="open-shortcuts" type="button" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+            </button>
+        </div>
+    </div>
+</footer>
+
+<!-- ============================== LIGHTBOX (YouTube) ============================== -->
+<dialog class="lightbox" id="lightbox" aria-label="Video player">
+    <div class="dialog-inner">
+        <div class="dialog-head">
+            <span class="dialog-title" id="lightbox-title">YouTube</span>
+            <button class="dialog-close" type="button" aria-label="Close" data-close-lightbox>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+            </button>
+        </div>
+        <div class="iframe-wrap">
+            <iframe id="lightbox-iframe" src="" title="Video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</dialog>
+
+<!-- ============================== PALETTE ============================== -->
+<dialog class="palette" id="palette" aria-label="Command palette">
+    <div class="palette-inner">
+        <div class="palette-input-wrap">
+            <svg class="ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-3.5-3.5"/></svg>
+            <input class="palette-input" id="palette-input" type="text" placeholder="Jump to a section, link, or action..." autocomplete="off">
+        </div>
+        <div class="palette-list" id="palette-list"></div>
+        <div class="palette-footer">
+            <span><kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>↵</kbd> select · <kbd>esc</kbd> close</span>
+            <span>asjadjah</span>
+        </div>
+    </div>
+</dialog>
+
+<!-- ============================== SHORTCUTS MODAL ============================== -->
+<dialog class="shortcuts" id="shortcuts" aria-label="Keyboard shortcuts">
+    <div class="shortcuts-inner">
+        <div class="shortcuts-head">
+            <h3>Keyboard shortcuts</h3>
+            <button class="icon-btn" type="button" aria-label="Close" data-close-shortcuts>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+            </button>
+        </div>
+        <div class="shortcuts-body">
+            <div class="shortcut-row"><span>Open command palette</span><span class="keys"><kbd>⌘</kbd><kbd>K</kbd></span></div>
+            <div class="shortcut-row"><span>Go to Home</span><span class="keys"><kbd>g</kbd><kbd>h</kbd></span></div>
+            <div class="shortcut-row"><span>Go to About</span><span class="keys"><kbd>g</kbd><kbd>a</kbd></span></div>
+            <div class="shortcut-row"><span>Go to Resume</span><span class="keys"><kbd>g</kbd><kbd>r</kbd></span></div>
+            <div class="shortcut-row"><span>Go to Portfolio</span><span class="keys"><kbd>g</kbd><kbd>p</kbd></span></div>
+            <div class="shortcut-row"><span>Toggle theme</span><span class="keys"><kbd>t</kbd></span></div>
+            <div class="shortcut-row"><span>This dialog</span><span class="keys"><kbd>?</kbd></span></div>
+        </div>
+        <div class="shortcuts-note mono" id="shortcuts-note">// keyboard shortcuts work best on devices with a physical keyboard</div>
+    </div>
+</dialog>
+
 <script src="js/main.js"></script>
 
-<script>
-(function () {
-    if (!window.__analyticsEnabled) {
-        return;
-    }
-
-    // Track portfolio item clicks
-    document.querySelectorAll('.portfolio-item-img a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            let projectName = this.parentElement.parentElement.querySelector('.name').textContent;
-            gtag('event', 'portfolio_click', {
-                'event_category': 'portfolio',
-                'event_label': projectName
-            });
-        });
-    });
-
-    // Track section navigation
-    document.querySelectorAll('.nav-anim').forEach(link => {
-        link.addEventListener('click', function(e) {
-            let section = this.getAttribute('href').substring(1);
-            gtag('event', 'section_navigation', {
-                'event_category': 'navigation',
-                'event_label': section
-            });
-        });
-    });
-
-    // Track mobile menu toggle
-    document.querySelector('.menu-toggle').addEventListener('click', function() {
-        gtag('event', 'mobile_menu_toggle', {
-            'event_category': 'navigation',
-            'event_label': 'Mobile Menu'
-        });
-    });
-})();
-</script>
 </body>
 </html>

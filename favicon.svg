@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .bg { fill: #0A0A0B; }
+    .fg { fill: #34D399; }
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #FAFAF9; }
+      .fg { fill: #0F766E; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="14"/>
+  <text x="50%" y="50%" class="fg"
+        font-family="'Geist Mono','JetBrains Mono',ui-monospace,monospace"
+        font-size="20" font-weight="700"
+        text-anchor="middle" dominant-baseline="central"
+        letter-spacing="-0.6">AAJ</text>
+</svg>
