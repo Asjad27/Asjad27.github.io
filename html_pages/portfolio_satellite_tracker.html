@@ -1,5 +1,22 @@
 <!-- Google tag (gtag.js): loads only on production; see ../js/analytics-init.js -->
 <script src="../js/analytics-init.js"></script>
+<script>
+(function () {
+    if (!window.__analyticsEnabled || typeof gtag !== 'function') return;
+    var project = 'Satellite Tracker';
+    var slug = 'satellite-tracker';
+    gtag('event', 'page_view', {
+        'page_title': project,
+        'page_location': location.origin + location.pathname + '#portfolio/' + slug,
+        'page_path': '/portfolio/' + slug
+    });
+    gtag('event', 'portfolio_view', {
+        'event_category': 'portfolio',
+        'event_label': project,
+        'project': project
+    });
+})();
+</script>
 <div class="ajax-page-content" id="ajax-page">
     <div class="ajax-page-wrapper">
         <div class="ajax-page-nav">

@@ -58,4 +58,74 @@
     } else {
         gtag('config', GA_ID);
     }
+
+    // Delegated link tracker: outbound clicks, mailto/tel (contact intent), file downloads.
+    // Anchors that already declare an inline gtag() onclick are skipped to avoid double-counting.
+    var DOWNLOAD_EXT = /\.(pdf|zip|7z|rar|tar|gz|csv|xlsx?|docx?|pptx?|key|pages|numbers|mp3|mp4|mov|wav|svg|psd|ai)(\?|#|$)/i;
+    var SELF_HOST = location.hostname.toLowerCase();
+
+    function safeHostname(href) {
+        try { return new URL(href, location.href).hostname.toLowerCase(); } catch (e) { return ''; }
+    }
+
+    function linkText(a) {
+        var t = (a.textContent || a.getAttribute('aria-label') || a.getAttribute('title') || '').trim();
+        return t ? t.slice(0, 80) : '';
+    }
+
+    document.addEventListener('click', function (ev) {
+        var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+        if (!a) {
+            return;
+        }
+        var inlineOnclick = a.getAttribute('onclick') || '';
+        if (/gtag\s*\(/.test(inlineOnclick)) {
+            return;
+        }
+
+        var href = a.getAttribute('href') || '';
+        if (!href || href.charAt(0) === '#') {
+            return;
+        }
+        var hrefLower = href.toLowerCase();
+
+        if (hrefLower.indexOf('mailto:') === 0) {
+            gtag('event', 'contact_intent', {
+                'event_category': 'contact',
+                'event_label': 'email',
+                'channel': 'email'
+            });
+            return;
+        }
+        if (hrefLower.indexOf('tel:') === 0) {
+            gtag('event', 'contact_intent', {
+                'event_category': 'contact',
+                'event_label': 'phone',
+                'channel': 'phone'
+            });
+            return;
+        }
+
+        var ext = href.match(DOWNLOAD_EXT);
+        if (ext) {
+            gtag('event', 'file_download', {
+                'event_category': 'engagement',
+                'event_label': linkText(a) || href,
+                'file_url': href,
+                'file_extension': ext[1].toLowerCase()
+            });
+        }
+
+        if (/^https?:\/\//i.test(href)) {
+            var host = safeHostname(href);
+            if (host && host !== SELF_HOST) {
+                gtag('event', 'outbound_click', {
+                    'event_category': 'outbound',
+                    'event_label': host,
+                    'outbound_url': href,
+                    'link_text': linkText(a)
+                });
+            }
+        }
+    }, true);
 })();
